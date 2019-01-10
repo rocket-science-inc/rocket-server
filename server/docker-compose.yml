@@ -1,0 +1,31 @@
+version: "3.7"
+
+services:  
+  redisdb:
+    container_name: redisdb
+    build:
+      context: ./users/pkg/db
+      dockerfile: Dockerfile
+    volumes:
+      - "./users/pkg/db/redis.conf:/usr/local/etc/redis/redis.conf"
+      - redis-data:/data
+    ports:
+      - 6379:6379
+  users:
+    container_name: users
+    build:
+      context: ./
+      dockerfile: users/Dockerfile
+    volumes:
+      - type: "bind"
+        source: "./"
+        target: "/go/src/rocket-server/server"
+    ports:
+      - 8080:8080
+      - 8081:8081
+      - 8082:8082
+    depends_on:
+      - redisdb
+
+volumes:
+  redis-data:

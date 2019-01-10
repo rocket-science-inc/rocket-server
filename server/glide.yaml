@@ -1,0 +1,10 @@
+package: rocket-server/server
+import:
+- package: github.com/go-kit/kit
+  version: ^0.8.0
+- package: github.com/gorilla/mux
+  version: ^1.6.2
+- package: github.com/gorilla/handlers
+  version: ^1.4.0
+- package: github.com/go-redis/redis
+  version: ^6.15.0
