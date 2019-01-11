@@ -10,6 +10,13 @@
             "request": "launch",
             "mode": "debug",
             "program": "${workspaceFolder}/server/users/cmd"
+        },
+        {
+            "name": "Events",
+            "type": "go",
+            "request": "launch",
+            "mode": "debug",
+            "program": "${workspaceFolder}/server/events/cmd"
         }
     ]
 }
