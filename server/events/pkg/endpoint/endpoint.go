@@ -2,69 +2,35 @@ package endpoint
 
 import (
 	"context"
+
 	endpoint "github.com/go-kit/kit/endpoint"
+	
 	service "rocket-server/server/events/pkg/service"
 	types "rocket-server/server/events/pkg/types"
 )
 
-// GetEventsRequest collects the request parameters for the GetEvents method.
-type GetEventsRequest struct{}
-
-// GetEventsResponse collects the response parameters for the GetEvents method.
-type GetEventsResponse struct {
-	Events []types.Event `json:"events"`
-	Error  error         `json:"error"`
+// Endpoints collects all of the endpoints that compose a profile service. It's
+// meant to be used as a helper struct, to collect all of the endpoints into a
+// single parameter.
+type Endpoints struct {
+	GetEventsEndpoint endpoint.Endpoint
+	AddEventEndpoint  endpoint.Endpoint
 }
 
-// MakeGetEventsEndpoint returns an endpoint that invokes GetEvents on the service.
-func MakeGetEventsEndpoint(s service.EventsService) endpoint.Endpoint {
-	return func(ctx context.Context, request interface{}) (interface{}, error) {
-		events, error := s.GetEvents(ctx)
-		return GetEventsResponse{
-			Error:  error,
-			Events: events,
-		}, nil
+// New returns a Endpoints struct that wraps the provided service, and wires in all of the
+// expected endpoint middlewares
+func New(s service.EventsService, mdw map[string][]endpoint.Middleware) Endpoints {
+	eps := Endpoints{
+		AddEventEndpoint:  MakeAddEventEndpoint(s),
+		GetEventsEndpoint: MakeGetEventsEndpoint(s),
 	}
-}
-
-// Failed implements Failer.
-func (r GetEventsResponse) Failed() error {
-	return r.Error
-}
-
-// AddEventRequest collects the request parameters for the AddEvent method.
-type AddEventRequest struct {
-	E types.Event `json:"e"`
-}
-
-// AddEventResponse collects the response parameters for the AddEvent method.
-type AddEventResponse struct {
-	Event types.Event `json:"event"`
-	Error error       `json:"error"`
-}
-
-// MakeAddEventEndpoint returns an endpoint that invokes AddEvent on the service.
-func MakeAddEventEndpoint(s service.EventsService) endpoint.Endpoint {
-	return func(ctx context.Context, request interface{}) (interface{}, error) {
-		req := request.(AddEventRequest)
-		event, error := s.AddEvent(ctx, req.E)
-		return AddEventResponse{
-			Error: error,
-			Event: event,
-		}, nil
+	for _, m := range mdw["GetEvents"] {
+		eps.GetEventsEndpoint = m(eps.GetEventsEndpoint)
 	}
-}
-
-// Failed implements Failer.
-func (r AddEventResponse) Failed() error {
-	return r.Error
-}
-
-// Failer is an interface that should be implemented by response types.
-// Response encoders can check if responses are Failer, and if so they've
-// failed, and if so encode them using a separate write path based on the error.
-type Failure interface {
-	Failed() error
+	for _, m := range mdw["AddEvent"] {
+		eps.AddEventEndpoint = m(eps.AddEventEndpoint)
+	}
+	return eps
 }
 
 // GetEvents implements Service. Primarily useful in a client.
@@ -85,4 +51,11 @@ func (en Endpoints) AddEvent(ctx context.Context, e types.Event) (event types.Ev
 		return
 	}
 	return response.(AddEventResponse).Event, response.(AddEventResponse).Error
+}
+
+// Failer is an interface that should be implemented by response types.
+// Response encoders can check if responses are Failer, and if so they've
+// failed, and if so encode them using a separate write path based on the error.
+type Failure interface {
+	Failed() error
 }
