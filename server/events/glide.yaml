@@ -1,0 +1,6 @@
+package: rocket-server/server/events
+import:
+- package: github.com/go-kit/kit
+  subpackages:
+  - transport/grpc
+- package: google.golang.org/grpc

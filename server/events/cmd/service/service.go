@@ -1,17 +1,26 @@
 package service
 
 import (
+	"flag"
 	"net"
-	endpoint "rocket-server/server/events/pkg/endpoint"
-	grpc "rocket-server/server/events/pkg/grpc"
-	pb "rocket-server/server/events/pkg/grpc/pb"
-	service "rocket-server/server/events/pkg/service"
 
 	endpoint1 "github.com/go-kit/kit/endpoint"
 	log "github.com/go-kit/kit/log"
 	group "github.com/oklog/oklog/pkg/group"
 	grpc1 "google.golang.org/grpc"
+	opentracinggo "github.com/opentracing/opentracing-go"
+
+	endpoint "rocket-server/server/events/pkg/endpoint"
+	grpc "rocket-server/server/events/pkg/grpc/handler"
+	pb "rocket-server/server/events/pkg/grpc/pb"
+	service "rocket-server/server/events/pkg/service"
 )
+
+var tracer opentracinggo.Tracer
+var logger log.Logger
+
+var fs = flag.NewFlagSet("events", flag.ExitOnError)
+var grpcAddr = fs.String("grpc-addr", ":8082", "gRPC listen address")
 
 func Run() {
 
