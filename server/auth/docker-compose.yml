@@ -1,0 +1,10 @@
+version: "3.7"
+
+services:  
+  redisdb:
+  events:
+    container_name: auth
+    depends_on:
+      - redisdb
+
+volumes:

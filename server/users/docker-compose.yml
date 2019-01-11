@@ -4,10 +4,10 @@ services:
   redisdb:
     container_name: redisdb
     build:
-      context: ./users/pkg/db
+      context: ./pkg/db
       dockerfile: Dockerfile
     volumes:
-      - "./users/pkg/db/redis.conf:/usr/local/etc/redis/redis.conf"
+      - "./pkg/db/redis.conf:/usr/local/etc/redis/redis.conf"
       - redis-data:/data
     ports:
       - 6379:6379
@@ -15,11 +15,11 @@ services:
     container_name: users
     build:
       context: ./
-      dockerfile: users/Dockerfile
+      dockerfile: Dockerfile
     volumes:
       - type: "bind"
         source: "./"
-        target: "/go/src/rocket-server/server"
+        target: "/go/src/rocket-server/server/users"
     ports:
       - 8080:8080
       - 8081:8081

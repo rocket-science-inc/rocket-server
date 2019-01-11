@@ -1,4 +1,5 @@
 *.exe
 vendor
+.DS_Store
 
 tmp

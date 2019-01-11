@@ -1,8 +1,8 @@
 FROM golang:1
 
-LABEL service.users.version="0.0.1-beta"
+LABEL service.events.version="0.0.1-beta"
 
-ENV PATH rocket-server/server/users
+ENV PATH rocket-server/server/events
 
 RUN mkdir -p /go/src/$PATH
 ADD . /go/src/$PATH
