@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+
 	"rocket-server/server/events/pkg/types"
 )
 
@@ -17,6 +18,7 @@ func (b *basicEventsService) GetEvents(ctx context.Context) (events []types.Even
 	// TODO implement the business logic of GetEvents
 	return events, error
 }
+
 func (b *basicEventsService) AddEvent(ctx context.Context, e types.Event) (event types.Event, error error) {
 	// TODO implement the business logic of AddEvent
 	return event, error
