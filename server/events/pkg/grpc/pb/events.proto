@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package pb;
+
+
+//The Events service definition.
+service Events {
+ rpc Get (GetRequest) returns (GetReply);
+ rpc Add (AddRequest) returns (AddReply);
+}
+
+message GetRequest {}
+
+message GetReply {}
+
+message AddRequest {}
+
+message AddReply {}
+
