@@ -1,6 +1,16 @@
 version: "3.2"
 
-services:  
+services:
+  redisdb:
+    container_name: redisdb
+    build:
+      context: ./pkg/db
+      dockerfile: Dockerfile
+    volumes:
+      - "./pkg/db/redis.conf:/usr/local/etc/redis/redis.conf"
+      - redis-data:/data
+    ports:
+      - 6379:6379  
   events:
     container_name: events
     build:
@@ -12,3 +22,8 @@ services:
         target: "/go/src/rocket-server/server/events"
     ports:
       - 8082:8082
+    depends_on:
+      - redisdb
+
+volumes:
+  redis-data:

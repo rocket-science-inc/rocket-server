@@ -3,4 +3,6 @@ import:
 - package: github.com/go-kit/kit
   subpackages:
   - transport/grpc
-- package: google.golang.org/grpc
+  version: ^0.8.0
+- package: github.com/go-redis/redis
+  version: ^6.15.0
