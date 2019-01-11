@@ -10,22 +10,22 @@ import (
 // meant to be used as a helper struct, to collect all of the endpoints into a
 // single parameter.
 type Endpoints struct {
-	GetEndpoint endpoint.Endpoint
-	AddEndpoint endpoint.Endpoint
+	GetEventsEndpoint endpoint.Endpoint
+	AddEventEndpoint  endpoint.Endpoint
 }
 
 // New returns a Endpoints struct that wraps the provided service, and wires in all of the
 // expected endpoint middlewares
 func New(s service.EventsService, mdw map[string][]endpoint.Middleware) Endpoints {
 	eps := Endpoints{
-		AddEndpoint: MakeAddEndpoint(s),
-		GetEndpoint: MakeGetEndpoint(s),
+		AddEventEndpoint:  MakeAddEventEndpoint(s),
+		GetEventsEndpoint: MakeGetEventsEndpoint(s),
 	}
-	for _, m := range mdw["Get"] {
-		eps.GetEndpoint = m(eps.GetEndpoint)
+	for _, m := range mdw["GetEvents"] {
+		eps.GetEventsEndpoint = m(eps.GetEventsEndpoint)
 	}
-	for _, m := range mdw["Add"] {
-		eps.AddEndpoint = m(eps.AddEndpoint)
+	for _, m := range mdw["AddEvent"] {
+		eps.AddEventEndpoint = m(eps.AddEventEndpoint)
 	}
 	return eps
 }

@@ -9,54 +9,54 @@ import (
 	pb "rocket-server/server/events/pkg/grpc/pb"
 )
 
-// makeGetHandler creates the handler logic
-func makeGetHandler(endpoints endpoint.Endpoints, options []grpc.ServerOption) grpc.Handler {
-	return grpc.NewServer(endpoints.GetEndpoint, decodeGetRequest, encodeGetResponse, options...)
+// makeGetEventsHandler creates the handler logic
+func makeGetEventsHandler(endpoints endpoint.Endpoints, options []grpc.ServerOption) grpc.Handler {
+	return grpc.NewServer(endpoints.GetEventsEndpoint, decodeGetEventsRequest, encodeGetEventsResponse, options...)
 }
 
-// decodeGetResponse is a transport/grpc.DecodeRequestFunc that converts a
+// decodeGetEventsResponse is a transport/grpc.DecodeRequestFunc that converts a
 // gRPC request to a user-domain sum request.
 // TODO implement the decoder
-func decodeGetRequest(_ context.Context, r interface{}) (interface{}, error) {
+func decodeGetEventsRequest(_ context.Context, r interface{}) (interface{}, error) {
 	return nil, errors.New("'Events' Decoder is not impelemented")
 }
 
-// encodeGetResponse is a transport/grpc.EncodeResponseFunc that converts
+// encodeGetEventsResponse is a transport/grpc.EncodeResponseFunc that converts
 // a user-domain response to a gRPC reply.
 // TODO implement the encoder
-func encodeGetResponse(_ context.Context, r interface{}) (interface{}, error) {
+func encodeGetEventsResponse(_ context.Context, r interface{}) (interface{}, error) {
 	return nil, errors.New("'Events' Encoder is not impelemented")
 }
-func (g *grpcServer) Get(ctx context1.Context, req *pb.GetRequest) (*pb.GetReply, error) {
-	_, rep, err := g.get.ServeGRPC(ctx, req)
+func (g *grpcServer) GetEvents(ctx context1.Context, req *pb.GetEventsRequest) (*pb.GetEventsReply, error) {
+	_, rep, err := g.getEvents.ServeGRPC(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	return rep.(*pb.GetReply), nil
+	return rep.(*pb.GetEventsReply), nil
 }
 
-// makeAddHandler creates the handler logic
-func makeAddHandler(endpoints endpoint.Endpoints, options []grpc.ServerOption) grpc.Handler {
-	return grpc.NewServer(endpoints.AddEndpoint, decodeAddRequest, encodeAddResponse, options...)
+// makeAddEventHandler creates the handler logic
+func makeAddEventHandler(endpoints endpoint.Endpoints, options []grpc.ServerOption) grpc.Handler {
+	return grpc.NewServer(endpoints.AddEventEndpoint, decodeAddEventRequest, encodeAddEventResponse, options...)
 }
 
-// decodeAddResponse is a transport/grpc.DecodeRequestFunc that converts a
+// decodeAddEventResponse is a transport/grpc.DecodeRequestFunc that converts a
 // gRPC request to a user-domain sum request.
 // TODO implement the decoder
-func decodeAddRequest(_ context.Context, r interface{}) (interface{}, error) {
+func decodeAddEventRequest(_ context.Context, r interface{}) (interface{}, error) {
 	return nil, errors.New("'Events' Decoder is not impelemented")
 }
 
-// encodeAddResponse is a transport/grpc.EncodeResponseFunc that converts
+// encodeAddEventResponse is a transport/grpc.EncodeResponseFunc that converts
 // a user-domain response to a gRPC reply.
 // TODO implement the encoder
-func encodeAddResponse(_ context.Context, r interface{}) (interface{}, error) {
+func encodeAddEventResponse(_ context.Context, r interface{}) (interface{}, error) {
 	return nil, errors.New("'Events' Encoder is not impelemented")
 }
-func (g *grpcServer) Add(ctx context1.Context, req *pb.AddRequest) (*pb.AddReply, error) {
-	_, rep, err := g.add.ServeGRPC(ctx, req)
+func (g *grpcServer) AddEvent(ctx context1.Context, req *pb.AddEventRequest) (*pb.AddEventReply, error) {
+	_, rep, err := g.addEvent.ServeGRPC(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	return rep.(*pb.AddReply), nil
+	return rep.(*pb.AddEventReply), nil
 }

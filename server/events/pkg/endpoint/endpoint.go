@@ -7,20 +7,20 @@ import (
 	types "rocket-server/server/events/pkg/types"
 )
 
-// GetRequest collects the request parameters for the Get method.
-type GetRequest struct{}
+// GetEventsRequest collects the request parameters for the GetEvents method.
+type GetEventsRequest struct{}
 
-// GetResponse collects the response parameters for the Get method.
-type GetResponse struct {
+// GetEventsResponse collects the response parameters for the GetEvents method.
+type GetEventsResponse struct {
 	Events []types.Event `json:"events"`
 	Error  error         `json:"error"`
 }
 
-// MakeGetEndpoint returns an endpoint that invokes Get on the service.
-func MakeGetEndpoint(s service.EventsService) endpoint.Endpoint {
+// MakeGetEventsEndpoint returns an endpoint that invokes GetEvents on the service.
+func MakeGetEventsEndpoint(s service.EventsService) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (interface{}, error) {
-		events, error := s.Get(ctx)
-		return GetResponse{
+		events, error := s.GetEvents(ctx)
+		return GetEventsResponse{
 			Error:  error,
 			Events: events,
 		}, nil
@@ -28,27 +28,27 @@ func MakeGetEndpoint(s service.EventsService) endpoint.Endpoint {
 }
 
 // Failed implements Failer.
-func (r GetResponse) Failed() error {
+func (r GetEventsResponse) Failed() error {
 	return r.Error
 }
 
-// AddRequest collects the request parameters for the Add method.
-type AddRequest struct {
+// AddEventRequest collects the request parameters for the AddEvent method.
+type AddEventRequest struct {
 	E types.Event `json:"e"`
 }
 
-// AddResponse collects the response parameters for the Add method.
-type AddResponse struct {
+// AddEventResponse collects the response parameters for the AddEvent method.
+type AddEventResponse struct {
 	Event types.Event `json:"event"`
 	Error error       `json:"error"`
 }
 
-// MakeAddEndpoint returns an endpoint that invokes Add on the service.
-func MakeAddEndpoint(s service.EventsService) endpoint.Endpoint {
+// MakeAddEventEndpoint returns an endpoint that invokes AddEvent on the service.
+func MakeAddEventEndpoint(s service.EventsService) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (interface{}, error) {
-		req := request.(AddRequest)
-		event, error := s.Add(ctx, req.E)
-		return AddResponse{
+		req := request.(AddEventRequest)
+		event, error := s.AddEvent(ctx, req.E)
+		return AddEventResponse{
 			Error: error,
 			Event: event,
 		}, nil
@@ -56,7 +56,7 @@ func MakeAddEndpoint(s service.EventsService) endpoint.Endpoint {
 }
 
 // Failed implements Failer.
-func (r AddResponse) Failed() error {
+func (r AddEventResponse) Failed() error {
 	return r.Error
 }
 
@@ -67,22 +67,22 @@ type Failure interface {
 	Failed() error
 }
 
-// Get implements Service. Primarily useful in a client.
-func (en Endpoints) Get(ctx context.Context) (events []types.Event, error error) {
-	request := GetRequest{}
-	response, err := en.GetEndpoint(ctx, request)
+// GetEvents implements Service. Primarily useful in a client.
+func (en Endpoints) GetEvents(ctx context.Context) (events []types.Event, error error) {
+	request := GetEventsRequest{}
+	response, err := en.GetEventsEndpoint(ctx, request)
 	if err != nil {
 		return
 	}
-	return response.(GetResponse).Events, response.(GetResponse).Error
+	return response.(GetEventsResponse).Events, response.(GetEventsResponse).Error
 }
 
-// Add implements Service. Primarily useful in a client.
-func (en Endpoints) Add(ctx context.Context, e types.Event) (event types.Event, error error) {
-	request := AddRequest{E: e}
-	response, err := en.AddEndpoint(ctx, request)
+// AddEvent implements Service. Primarily useful in a client.
+func (en Endpoints) AddEvent(ctx context.Context, e types.Event) (event types.Event, error error) {
+	request := AddEventRequest{E: e}
+	response, err := en.AddEventEndpoint(ctx, request)
 	if err != nil {
 		return
 	}
-	return response.(AddResponse).Event, response.(AddResponse).Error
+	return response.(AddEventResponse).Event, response.(AddEventResponse).Error
 }

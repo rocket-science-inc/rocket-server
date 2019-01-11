@@ -7,18 +7,18 @@ import (
 
 // EventsService describes the service.
 type EventsService interface {
-	Get(ctx context.Context) (events []types.Event, error error)
-	Add(ctx context.Context, e types.Event) (event types.Event, error error)
+	GetEvents(ctx context.Context) (events []types.Event, error error)
+	AddEvent(ctx context.Context, e types.Event) (event types.Event, error error)
 }
 
 type basicEventsService struct{}
 
-func (b *basicEventsService) Get(ctx context.Context) (events []types.Event, error error) {
-	// TODO implement the business logic of Get
+func (b *basicEventsService) GetEvents(ctx context.Context) (events []types.Event, error error) {
+	// TODO implement the business logic of GetEvents
 	return events, error
 }
-func (b *basicEventsService) Add(ctx context.Context, e types.Event) (event types.Event, error error) {
-	// TODO implement the business logic of Add
+func (b *basicEventsService) AddEvent(ctx context.Context, e types.Event) (event types.Event, error error) {
+	// TODO implement the business logic of AddEvent
 	return event, error
 }
 
