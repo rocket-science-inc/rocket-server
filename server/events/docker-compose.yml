@@ -1,10 +1,14 @@
 version: "3.7"
 
 services:  
-  redisdb:
   events:
     container_name: events
-    depends_on:
-      - redisdb
-
-volumes:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    volumes:
+      - type: "bind"
+        source: "./"
+        target: "/go/src/rocket-server/server/events"
+    ports:
+      - 8082:8082
