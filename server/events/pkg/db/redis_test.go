@@ -5,12 +5,14 @@ import (
 	"testing"
 	"time"
 
-	log "github.com/Sirupsen/logrus"
+	log "github.com/go-kit/kit/log"
 )
 
 const pipelength = 10
 
-func benchmarkStoreInHset(client RedisClient, b *testing.B) {
+var logger log.Logger
+
+func benchmarkStoreInHset(client Client, b *testing.B) {
 	// generate 200 bytes of data
 	data := make([]byte, 200)
 	// key is the current unix timestamp
@@ -21,16 +23,16 @@ func benchmarkStoreInHset(client RedisClient, b *testing.B) {
 	// runtime decides to re run the test with the same key somehow
 	var fieldCounter int
 	for n := 0; n < b.N; n++ {
-		err = client.StoreInHset(key, strconv.Itoa(fieldCounter), data)
+		err = client.Store(key, strconv.Itoa(fieldCounter), data)
 		if err != nil {
-			log.Errorf("Error while storing data in HSet with key %v in field %v: %v", key, fieldCounter, err)
+			logger.Log("Error while storing data in HSet with key %v in field %v: %v", key, fieldCounter, err)
 			return
 		}
 		fieldCounter++
 	}
 }
 
-func benchmarkStoreInHsetWithPipe(client RedisClient, b *testing.B) {
+func benchmarkStoreInHsetWithPipe(client Client, b *testing.B) {
 	// generate 200 bytes of data
 	data := make([]byte, 200)
 	// key is the current unix timestamp
@@ -44,7 +46,7 @@ func benchmarkStoreInHsetWithPipe(client RedisClient, b *testing.B) {
 	for n := 0; n < b.N; n++ {
 		err = pipe.StoreInHset(key, strconv.Itoa(fieldCounter), data)
 		if err != nil {
-			log.Errorf("Error while storing data in HSet with key %v in field %v: %v", key, fieldCounter, err)
+			logger.Log("Error while storing data in HSet with key %v in field %v: %v", key, fieldCounter, err)
 			return
 		}
 		fieldCounter++
@@ -52,7 +54,7 @@ func benchmarkStoreInHsetWithPipe(client RedisClient, b *testing.B) {
 		if pipeCounter%pipelength == 0 && n != 0 {
 			_, err := pipe.Execute()
 			if err != nil {
-				log.Error("Error while executing pipe: ", err)
+				logger.Log("Error while executing pipe: ", err)
 				return
 			}
 			// reset the counter now that we executed the pipe
@@ -63,7 +65,7 @@ func benchmarkStoreInHsetWithPipe(client RedisClient, b *testing.B) {
 	if pipeCounter%pipelength == 0 && pipelength == 0 {
 		_, err := pipe.Execute()
 		if err != nil {
-			log.Error("Error while executing remainder in pipe: ", err)
+			logger.Log("Error while executing remainder in pipe: ", err)
 			return
 		}
 	}
@@ -72,27 +74,27 @@ func benchmarkStoreInHsetWithPipe(client RedisClient, b *testing.B) {
 // BenchmarkStoreInHsetGoRedisTcp benchmarks the StoreInHset function using a go-redis
 // client with a tcp connection
 func BenchmarkStoreInHsetGoRedisTcp(b *testing.B) {
-	client := NewRedisClient("go-redis", "localhost:6379", Tcp)
+	client := NewClient("localhost:6379", Tcp)
 	benchmarkStoreInHset(client, b)
 }
 
 // BenchmarkStoreInHsetGoRedisUnix benchmarks the StoreInHset function using a go-redis
 // client with a unix socket
 func BenchmarkStoreInHsetGoRedisUnix(b *testing.B) {
-	client := NewRedisClient("go-redis", "/tmp/redis.sock", Unix)
+	client := NewClient("/tmp/redis.sock", Unix)
 	benchmarkStoreInHset(client, b)
 }
 
 // BenchmarkStoreInHsetGoRedisTcpWithPipe benchmarks the StoreInHset function using a go-redis
 // client with a tcp connection and using a pipe
 func BenchmarkStoreInHsetGoRedisTcpWithPipe(b *testing.B) {
-	client := NewRedisClient("go-redis", "localhost:6379", Tcp)
+	client := NewClient("localhost:6379", Tcp)
 	benchmarkStoreInHsetWithPipe(client, b)
 }
 
 // BenchmarkStoreInHsetGoRedisUnixWithPipe benchmarks the StoreInHset function using a go-redis
 // client with a unix socket and using a pipe
 func BenchmarkStoreInHsetGoRedisUnixWithPipe(b *testing.B) {
-	client := NewRedisClient("go-redis", "/tmp/redis.sock", Unix)
+	client := NewClient("/tmp/redis.sock", Unix)
 	benchmarkStoreInHsetWithPipe(client, b)
 }
