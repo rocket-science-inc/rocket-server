@@ -1,8 +1,29 @@
 package: rocket-server/server/events
 import:
 - package: github.com/go-kit/kit
-  subpackages:
-  - transport/grpc
   version: ^0.8.0
+  subpackages:
+  - endpoint
+  - log
+  - tracing/opentracing
+  - transport/grpc
 - package: github.com/go-redis/redis
-  version: ^6.15.0
+  version: ^6.15.1
+- package: github.com/golang/protobuf
+  version: ^1.2.0
+  subpackages:
+  - proto
+- package: github.com/oklog/oklog
+  version: ^0.3.2
+  subpackages:
+  - pkg/group
+- package: github.com/opentracing/opentracing-go
+  version: ^1.0.2
+- package: golang.org/x/net
+  subpackages:
+  - context
+- package: google.golang.org/grpc
+  version: ^1.17.0
+testImport:
+- package: github.com/Sirupsen/logrus
+  version: ^1.3.0
