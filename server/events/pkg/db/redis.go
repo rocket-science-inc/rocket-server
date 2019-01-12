@@ -43,7 +43,7 @@ func (rc GoRedisClient) Store(key, field string, value []byte) error {
 	return rc.client.HSet(key, field, value).Err()
 }
 
-func (rp GoRedisPipe) StoreInHset(key, field string, value []byte) error {
+func (rp GoRedisPipe) Store(key, field string, value []byte) error {
 	return rp.pipe.HSet(key, field, value).Err()
 }
 
@@ -55,7 +55,7 @@ func (rc GoRedisClient) Get(key, field string) ([]byte, error) {
 	return []byte(cmd.Val()), nil
 }
 
-func (rp GoRedisPipe) GetFromHset(key, field string) ([]byte, error) {
+func (rp GoRedisPipe) Get(key, field string) ([]byte, error) {
 	cmd := rp.pipe.HGet(key, field)
 	if cmd.Err() != nil {
 		return nil, cmd.Err()
@@ -83,8 +83,8 @@ func (rp GoRedisPipe) Execute() ([]byte, error) {
 	return nil, err
 }
 
-func (rc GoRedisClient) StartPipe() RedisPipe {
-	return GoRedisPipe{
-		//pipe: rc.client.Pipeline(),
+func (rc GoRedisClient) StartPipe() GoRedisPipe {
+	return GoRedisPipe {
+		pipe: rc.client.Pipeline(),
 	}
 }

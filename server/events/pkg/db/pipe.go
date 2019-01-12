@@ -1,6 +1,6 @@
 package db
 
-type Pipe interface {
+type GoRedisPipe interface {
 	// StoreInHset stores value in an hset with the designated key in the designated field
 	Store(key, field string, value []byte) error
 	// GetFromHset gets a value fron an hset with the designated key from the designated field

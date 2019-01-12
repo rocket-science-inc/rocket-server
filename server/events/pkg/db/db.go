@@ -17,7 +17,7 @@ type Client interface {
 	// GetMemUsage returns the client memory usage
 	GetMemUsage() (int, error)
 	// StartPipe returns a new Pipe pipeline
-	StartPipe() Pipe
+	StartPipe() GoRedisPipe
 }
 
 type ConnectionType int
