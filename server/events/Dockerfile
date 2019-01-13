@@ -12,8 +12,8 @@ RUN mkdir -p /go/src/${SERVICE_PATH}
 ADD . /go/src/${SERVICE_PATH}
 WORKDIR /go/src/${SERVICE_PATH}
 
-RUN glide install
-RUN go install ./cmd
+RUN glide install && glide cc
+RUN go install ./cmd && go clean -cache
 
 CMD go run ./cmd
 
