@@ -6,7 +6,7 @@ import (
 	log "github.com/go-kit/kit/log"
 
 	types "rocket-server/server/events/pkg/types"
-	db "rocket-server/server/events/pkg/db"
+	//db "rocket-server/server/events/pkg/db"
 )
 
 var logger log.Logger
@@ -21,11 +21,11 @@ type basicEventsService struct{}
 
 func (b *basicEventsService) GetEvents(ctx context.Context) (events []types.Event, error error) {
 	// TODO implement the business logic of GetEvents
-	dbConnectionString := "localhost:6379"
-	logger.Log("Connect to redis server at address ", dbConnectionString)
+	//dbConnectionString := "localhost:6379"
+	//logger.Log("Connect to redis server at address ", dbConnectionString)
 
-	client := db.NewClient(dbConnectionString, db.Unix)
-	
+	//client := db.NewClient(dbConnectionString)
+
 	return events, error
 }
 

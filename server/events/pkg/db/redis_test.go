@@ -4,13 +4,38 @@ import (
 	"strconv"
 	"testing"
 	"time"
-
-	log "github.com/go-kit/kit/log"
 )
 
+// store up to 10 statements before executing them
 const pipelength = 10
 
-var logger log.Logger
+// BenchmarkStoreInHsetRedigoTcp benchmarks the StoreInHset function using a radix.v2
+// client with a tcp connection
+func BenchmarkStoreInHsetRadixTcp(b *testing.B) {
+	client := newRedisClient("localhost:6379", "tcp")
+	benchmarkStoreInHset(client, b)
+}
+
+// BenchmarkStoreInHsetRedigoUnix benchmarks the StoreInHset function using a radix.v2
+// client with a unix socket
+func BenchmarkStoreInHsetRadixUnix(b *testing.B) {
+	client := newRedisClient("/tmp/redis.sock", "unix")
+	benchmarkStoreInHset(client, b)
+}
+
+// BenchmarkStoreInHsetRedigoTcpWithPipe benchmarks the StoreInHset function using a radix.v2
+// client with a tcp connection and using a pipe
+func BenchmarkStoreInHsetRadixTcpWithPipe(b *testing.B) {
+	client := newRedisClient("localhost:6379", "tcp")
+	benchmarkStoreInHsetWithPipe(client, b)
+}
+
+// BenchmarkStoreInHsetRedigoUnixWithPipe benchmarks the StoreInHset function using a radix.v2
+// client with a unix socket and using a pipe
+func BenchmarkStoreInHsetRadixUnixWithPipe(b *testing.B) {
+	client := newRedisClient("/tmp/redis.sock", "unix")
+	benchmarkStoreInHsetWithPipe(client, b)
+}
 
 func benchmarkStoreInHset(client Client, b *testing.B) {
 	// generate 200 bytes of data
@@ -23,7 +48,7 @@ func benchmarkStoreInHset(client Client, b *testing.B) {
 	// runtime decides to re run the test with the same key somehow
 	var fieldCounter int
 	for n := 0; n < b.N; n++ {
-		err = client.Store(key, strconv.Itoa(fieldCounter), data)
+		err = client.StoreInHset(key, strconv.Itoa(fieldCounter), data)
 		if err != nil {
 			logger.Log("Error while storing data in HSet with key %v in field %v: %v", key, fieldCounter, err)
 			return
@@ -69,32 +94,4 @@ func benchmarkStoreInHsetWithPipe(client Client, b *testing.B) {
 			return
 		}
 	}
-}
-
-// BenchmarkStoreInHsetGoRedisTcp benchmarks the StoreInHset function using a go-redis
-// client with a tcp connection
-func BenchmarkStoreInHsetGoRedisTcp(b *testing.B) {
-	client := NewClient("localhost:6379", Tcp)
-	benchmarkStoreInHset(client, b)
-}
-
-// BenchmarkStoreInHsetGoRedisUnix benchmarks the StoreInHset function using a go-redis
-// client with a unix socket
-func BenchmarkStoreInHsetGoRedisUnix(b *testing.B) {
-	client := NewClient("/tmp/redis.sock", Unix)
-	benchmarkStoreInHset(client, b)
-}
-
-// BenchmarkStoreInHsetGoRedisTcpWithPipe benchmarks the StoreInHset function using a go-redis
-// client with a tcp connection and using a pipe
-func BenchmarkStoreInHsetGoRedisTcpWithPipe(b *testing.B) {
-	client := NewClient("localhost:6379", Tcp)
-	benchmarkStoreInHsetWithPipe(client, b)
-}
-
-// BenchmarkStoreInHsetGoRedisUnixWithPipe benchmarks the StoreInHset function using a go-redis
-// client with a unix socket and using a pipe
-func BenchmarkStoreInHsetGoRedisUnixWithPipe(b *testing.B) {
-	client := NewClient("/tmp/redis.sock", Unix)
-	benchmarkStoreInHsetWithPipe(client, b)
 }

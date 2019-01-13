@@ -3,72 +3,64 @@ package db
 import (
 	"strconv"
 	"strings"
-	
-	go_redis "github.com/go-redis/redis"
+
+	redis "github.com/mediocregopher/radix.v2/redis"
 )
 
-type GoRedisClient struct {
-	client  *go_redis.Client
+// RedigoClient is a wrapper for a "redigo" client. It is not thread safe
+type RadixClient struct {
+	client  *redis.Client
 	network string
 }
 
-type GoRedisPipe struct {
-	pipe *go_redis.Pipeline
+type RadixPipe struct {
+	client *redis.Client
 }
 
-func newRedisClient(connectionAddr string, conType ConnectionType) GoRedisClient {
-	network := connTypeToString(conType)
-
-	client := go_redis.NewClient(&go_redis.Options{
-		Network:  network,
-		Addr:     connectionAddr, 
-		Password: "",
-		DB:       0,
-	})
-	return GoRedisClient {
+// newRedisClient creates a new radix client
+func newRedisClient(connectionAddr string, network string) Client {
+	client, err := redis.Dial(network, connectionAddr)
+	if err != nil {
+		logger.Log("Failed to create radix client: ", err)
+	}
+	return RadixClient{
 		client:  client,
 		network: network,
 	}
 }
 
-func (rc GoRedisClient) String() string {
-	return "go-redis - connection: " + rc.network
+func (rc RadixClient) Ping() error {
+	return rc.client.Cmd("PING").Err
 }
 
-func (rc GoRedisClient) Ping() error {
-	return rc.client.Ping().Err()
+func (rc RadixClient) StoreInHset(key, field string, value []byte) error {
+	return rc.client.Cmd("HSET", key, field, value).Err
 }
 
-func (rc GoRedisClient) Store(key, field string, value []byte) error {
-	return rc.client.HSet(key, field, value).Err()
+func (rp RadixPipe) StoreInHset(key, field string, value []byte) error {
+	rp.client.PipeAppend("HSET", key, field, value)
+	return nil
 }
 
-func (rp GoRedisPipe) Store(key, field string, value []byte) error {
-	return rp.pipe.HSet(key, field, value).Err()
-}
-
-func (rc GoRedisClient) Get(key, field string) ([]byte, error) {
-	cmd := rc.client.HGet(key, field)
-	if cmd.Err() != nil {
-		return nil, cmd.Err()
+func (rc RadixClient) GetFromHset(key, field string) ([]byte, error) {
+	resp, err := rc.client.Cmd("HGET", key, field).Bytes()
+	if err != nil {
+		return nil, err
 	}
-	return []byte(cmd.Val()), nil
+	return resp, nil
 }
 
-func (rp GoRedisPipe) Get(key, field string) ([]byte, error) {
-	cmd := rp.pipe.HGet(key, field)
-	if cmd.Err() != nil {
-		return nil, cmd.Err()
-	}
-	return []byte(cmd.Val()), nil
+func (rp RadixPipe) GetFromHset(key, field string) ([]byte, error) {
+	rp.client.PipeAppend("HGET", key, field)
+	return nil, nil
 }
 
-func (rc GoRedisClient) GetMemUsage() (int, error) {
-	cmd := rc.client.Info("memory")
-	if cmd.Err() != nil {
-		return 0, cmd.Err()
+func (rc RadixClient) GetMemUsage() (int, error) {
+	resp, err := rc.client.Cmd("INFO", "memory").Str()
+	if err != nil {
+		return 0, err
 	}
-	fields := strings.Fields(cmd.String())
+	fields := strings.Fields(resp)
 	for i := range fields {
 		if strings.HasPrefix(fields[i], "used_memory:") {
 			return strconv.Atoi(strings.TrimPrefix(fields[i], "used_memory:"))
@@ -77,14 +69,21 @@ func (rc GoRedisClient) GetMemUsage() (int, error) {
 	return 0, nil
 }
 
-func (rp GoRedisPipe) Execute() ([]byte, error) {
-	// Execute the pipe, don't check the returns, only possible errors
-	_, err := rp.pipe.Exec()
+func (rp RadixPipe) Execute() ([]byte, error) {
+	// Execute the pipe, check if there are errors
+	var err error
+	for err == nil {
+		err = rp.client.PipeResp().Err
+	}
+	// ignore pipelineempty errors
+	if err == redis.ErrPipelineEmpty {
+		err = nil
+	}
 	return nil, err
 }
 
-func (rc GoRedisClient) StartPipe() GoRedisPipe {
-	return GoRedisPipe {
-		pipe: rc.client.Pipeline(),
+func (rc RadixClient) StartPipe() Pipe {
+	return RadixPipe{
+		client: rc.client,
 	}
 }

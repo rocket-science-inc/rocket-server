@@ -7,8 +7,6 @@ import:
   - log
   - tracing/opentracing
   - transport/grpc
-- package: github.com/go-redis/redis
-  version: ^6.15.1
 - package: github.com/golang/protobuf
   version: ^1.2.0
   subpackages:
@@ -24,3 +22,6 @@ import:
   - context
 - package: google.golang.org/grpc
   version: ^1.17.0
+- package: github.com/mediocregopher/radix.v2
+  subpackages:
+  - redis

@@ -1,5 +1,5 @@
-hash: 98df37d0ab76931bab07ba19e87b27a91f8e71ef5d52fcf3c68f348b4f27467c
-updated: 2019-01-12T11:01:45.949288+02:00
+hash: 2300aac8c0e91288532c89c92442723ffe098c9d5731ed3171f06bd5dd0de6cf
+updated: 2019-01-13T10:22:32.088486+02:00
 imports:
 - name: github.com/go-kit/kit
   version: 12210fb6ace19e0496167bb3e667dcd91fa9f69b
@@ -11,15 +11,6 @@ imports:
   - transport/http
 - name: github.com/go-logfmt/logfmt
   version: 07c9b44f60d7ffdfb7d8efe1ad539965737836dc
-- name: github.com/go-redis/redis
-  version: 22be8a3eaf992c828cecb69dc07348313bf08d2e
-  subpackages:
-  - internal
-  - internal/consistenthash
-  - internal/hashtag
-  - internal/pool
-  - internal/proto
-  - internal/util
 - name: github.com/golang/protobuf
   version: aa810b61a9c79d51363740d207bb46cf8e620ed5
   subpackages:
@@ -30,6 +21,10 @@ imports:
   - ptypes/timestamp
 - name: github.com/kr/logfmt
   version: b84e30acd515aadc4b783ad4ff83aff3299bdfe0
+- name: github.com/mediocregopher/radix.v2
+  version: b67df6e626f993b64b3ca9f4b8630900e61002e3
+  subpackages:
+  - redis
 - name: github.com/oklog/oklog
   version: e3ad1c411c27b4bc18c5facb9331820d141a5a54
   subpackages:
