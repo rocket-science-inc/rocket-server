@@ -9,5 +9,8 @@ jobs:
     steps:
       - checkout # check out source code to working directory
       - run:
-          name: Build Events service
+          name: Events service - build
           command: docker-compose --file ./server/events/docker-compose.yml build
+      - run:
+          name: Events service - test
+          command: go test -v rocket-server/server/events/...
