@@ -3,13 +3,9 @@ package service
 import (
 	"context"
 
-	log "github.com/go-kit/kit/log"
-
 	types "rocket-server/server/events/pkg/types"
 	//db "rocket-server/server/events/pkg/db"
 )
-
-var logger log.Logger
 
 // EventsService describes the service.
 type EventsService interface {
@@ -25,12 +21,13 @@ func (b *basicEventsService) GetEvents(ctx context.Context) (events []types.Even
 	//logger.Log("Connect to redis server at address ", dbConnectionString)
 
 	//client := db.NewClient(dbConnectionString)
-
+	panic("not implemented")
 	return events, error
 }
 
 func (b *basicEventsService) AddEvent(ctx context.Context, e types.Event) (event types.Event, error error) {
 	// TODO implement the business logic of AddEvent
+	panic("not implemented")
 	return event, error
 }
 
