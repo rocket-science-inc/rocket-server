@@ -3,7 +3,6 @@ FROM golang:1
 # setup environment
 ENV VERSION             "0.0.1-beta"
 ENV SERVICE_PATH        rocket-server/server/events
-ENV COVERALLS_TOKEN     qFqA2nCfFvNoA5tdrYqMXudZavDVTWmGu
 
 LABEL service.events.version=${VERSION}
 
@@ -20,10 +19,7 @@ RUN glide install && glide cc
 # compile
 RUN go install ./cmd && go clean -cache
 # test
-RUN go test -v -covermode=count -coverprofile=coverage.out ./... && \ 
-    go get github.com/mattn/goveralls && \ 
-    goveralls -coverprofile=./coverage.out -service=circle-ci -repotoken=${COVERALLS_TOKEN} && \
-    go clean -testcache
+RUN go test -v ./... && go clean -testcache
 # run
 CMD go run ./cmd
 
