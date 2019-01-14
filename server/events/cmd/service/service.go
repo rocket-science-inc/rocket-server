@@ -43,8 +43,8 @@ func Run() {
 			"caller", log.DefaultCaller,
 		)
 	}
-	level.Info(logger).Log("service", "started")
-	defer level.Info(logger).Log("service", "ended")
+	level.Info(logger).Log("events service", "started")
+	defer level.Info(logger).Log("events service", "ended")
 
 	//  Determine which tracer to use.
 	level.Info(logger).Log("tracer", "none")
