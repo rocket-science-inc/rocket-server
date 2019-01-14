@@ -22,3 +22,7 @@ import:
   - context
 - package: google.golang.org/grpc
   version: ^1.17.0
+- package: github.com/99designs/gqlgen
+  version: ^0.7.1
+  subpackages:
+  - cmd

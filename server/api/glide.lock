@@ -1,6 +1,20 @@
-hash: 5a096f8456720d2b936f6858c4958d09baac908af975420a9d8599c20ffbe840
-updated: 2019-01-14T19:25:21.1009065+02:00
+hash: 5a88cc515b2eef2694a339e0cbc78e358ae05c2d7656af3e5ec758763c9aa18b
+updated: 2019-01-14T20:19:37.5156734+02:00
 imports:
+- name: github.com/99designs/gqlgen
+  version: 3a7f37c7e22a8fedce430c4d340ad5c1351198f4
+  subpackages:
+  - cmd
+  - codegen
+  - codegen/templates
+  - complexity
+  - graphql
+  - graphql/introspection
+  - handler
+  - internal/gopath
+  - internal/imports
+- name: github.com/agnivade/levenshtein
+  version: 185086b29d40851ac6c41150d8e497ea2b9520e9
 - name: github.com/go-kit/kit
   version: 12210fb6ace19e0496167bb3e667dcd91fa9f69b
   subpackages:
@@ -19,6 +33,12 @@ imports:
   - ptypes/any
   - ptypes/duration
   - ptypes/timestamp
+- name: github.com/gorilla/websocket
+  version: 95ba29eb981bbb27d92e1f70bf8a1949452d926b
+- name: github.com/hashicorp/golang-lru
+  version: 20f1fb78b0740ba8c3cb143a61e86ba5c8669768
+  subpackages:
+  - simplelru
 - name: github.com/kr/logfmt
   version: b84e30acd515aadc4b783ad4ff83aff3299bdfe0
 - name: github.com/oklog/oklog
@@ -31,6 +51,19 @@ imports:
   version: 1949ddbfd147afd4d964a9f00b24eb291e0e7c38
   subpackages:
   - log
+- name: github.com/pkg/errors
+  version: ffb6e22f01932bf7ac35e0bad9be11f01d1c8685
+- name: github.com/urfave/cli
+  version: b67dcf995b6a7b7f14fad5fcb7cc5441b05e814b
+- name: github.com/vektah/gqlparser
+  version: 4118a915244a726381fefaf7521051aee21d5a50
+  subpackages:
+  - ast
+  - gqlerror
+  - lexer
+  - parser
+  - validator
+  - validator/rules
 - name: golang.org/x/net
   version: 915654e7eabcea33ae277abbecf52f0d8b7a9fdc
   subpackages:
@@ -52,6 +85,21 @@ imports:
   - transform
   - unicode/bidi
   - unicode/norm
+- name: golang.org/x/tools
+  version: 36f37f8f5c8169a4482a16bcccc34b26413e704c
+  subpackages:
+  - go/ast/astutil
+  - go/buildutil
+  - go/gcexportdata
+  - go/internal/cgo
+  - go/internal/gcimporter
+  - go/internal/packagesdriver
+  - go/loader
+  - go/packages
+  - imports
+  - internal/fastwalk
+  - internal/gopathwalk
+  - internal/semver
 - name: google.golang.org/genproto
   version: db91494dd46c1fdcbbde05e5ff5eb56df8f7d79a
   subpackages:
@@ -89,4 +137,6 @@ imports:
   - stats
   - status
   - tap
+- name: gopkg.in/yaml.v2
+  version: 51d6538a90f86fe93ac480b35f37b2be17fef232
 testImports: []
