@@ -1,0 +1,7 @@
+syntax = "proto3";
+package pb;
+
+//The Api service definition.
+service Api {
+
+}
