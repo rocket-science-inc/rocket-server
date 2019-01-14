@@ -4,8 +4,6 @@ import (
 	log "github.com/go-kit/kit/log"
 )
 
-var logger log.Logger
-
 // Client is an interface defining all methods our custom redis client wrappers must implement
 type Client interface {
 	// Ping sends a ping to the redis server, this can be used to check the connection
@@ -29,6 +27,6 @@ type Pipe interface {
 	Execute() ([]byte, error)
 }
 
-func NewClient(connectionAddr string) Client {
-	return newRedisClient(connectionAddr, "tcp")
+func NewClient(connectionAddr string, logger log.Logger) Client {
+	return newRedisClient(connectionAddr, "tcp", logger)
 }

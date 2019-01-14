@@ -12,8 +12,9 @@ import (
 	opentracinggo "github.com/opentracing/opentracing-go"
 	google_grpc "google.golang.org/grpc"
 
-	kit_endpoint "github.com/go-kit/kit/endpoint"
 	log "github.com/go-kit/kit/log"
+	level "github.com/go-kit/kit/log/level"
+	kit_endpoint "github.com/go-kit/kit/endpoint"
 	opentracing "github.com/go-kit/kit/tracing/opentracing"
 	kit_grpc "github.com/go-kit/kit/transport/grpc"
 
@@ -33,19 +34,27 @@ func Run() {
 	fs.Parse(os.Args[1:])
 
 	// Create a single logger, which we'll use and give to other components.
-	logger = log.NewLogfmtLogger(os.Stderr)
-	logger = log.With(logger, "ts", log.DefaultTimestampUTC)
-	logger = log.With(logger, "caller", log.DefaultCaller)
+	{
+		logger = log.NewLogfmtLogger(os.Stderr)
+		logger = log.NewSyncLogger(logger)
+		logger = level.NewFilter(logger, level.AllowDebug())
+		logger = log.With(logger,
+			"ts", log.DefaultTimestampUTC,
+			"caller", log.DefaultCaller,
+		)
+	}
+	level.Info(logger).Log("service", "started")
+	defer level.Info(logger).Log("service", "ended")
 
 	//  Determine which tracer to use.
-	logger.Log("tracer", "none")
+	level.Info(logger).Log("tracer", "none")
 	tracer = opentracinggo.GlobalTracer()
 
 	svc := service.New(getServiceMiddleware(logger))
 	eps := endpoint.New(svc, getEndpointMiddleware(logger))
 	g := createService(eps)
 	initCancelInterrupt(g)
-	logger.Log("exit", g.Run())
+	level.Info(logger).Log("exit", g.Run())
 }
 
 func createService(endpoints endpoint.Endpoints) (g *group.Group) {
@@ -60,10 +69,10 @@ func initGRPCHandler(endpoints endpoint.Endpoints, g *group.Group) {
 	grpcServer := grpc.NewGRPCServer(endpoints, options)
 	grpcListener, err := net.Listen("tcp", *grpcAddr)
 	if err != nil {
-		logger.Log("transport", "gRPC", "during", "Listen", "err", err)
+		level.Error(logger).Log("transport", "gRPC", "during", "Listen", "err", err)
 	}
 	g.Add(func() error {
-		logger.Log("transport", "gRPC", "addr", *grpcAddr)
+		level.Info(logger).Log("transport", "gRPC", "addr", *grpcAddr)
 		baseServer := google_grpc.NewServer()
 		pb.RegisterEventsServer(baseServer, grpcServer)
 		return baseServer.Serve(grpcListener)

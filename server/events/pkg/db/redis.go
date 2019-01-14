@@ -5,6 +5,8 @@ import (
 	"strings"
 
 	redis "github.com/mediocregopher/radix.v2/redis"
+	log "github.com/go-kit/kit/log"
+	level "github.com/go-kit/kit/log/level"
 )
 
 // RedigoClient is a wrapper for a "redigo" client. It is not thread safe
@@ -18,12 +20,12 @@ type RadixPipe struct {
 }
 
 // newRedisClient creates a new radix client
-func newRedisClient(connectionAddr string, network string) Client {
+func newRedisClient(connectionAddr string, network string, logger log.Logger) Client {
 	client, err := redis.Dial(network, connectionAddr)
 	if err != nil {
-		logger.Log("Failed to create radix client: ", err)
+		level.Error(logger).Log("redis", "Failed to create radix client", "error", err)
 	}
-	return RadixClient{
+	return RadixClient {
 		client:  client,
 		network: network,
 	}
