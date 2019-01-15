@@ -1,5 +1,5 @@
-hash: 5a88cc515b2eef2694a339e0cbc78e358ae05c2d7656af3e5ec758763c9aa18b
-updated: 2019-01-14T20:19:37.5156734+02:00
+hash: 88b2c4f1e89322e6733622a5a6d39f1fc6ff3b2ff6a1e0c2f2700c06b0961754
+updated: 2019-01-15T23:18:38.782592+02:00
 imports:
 - name: github.com/99designs/gqlgen
   version: 3a7f37c7e22a8fedce430c4d340ad5c1351198f4
@@ -19,10 +19,12 @@ imports:
   version: 12210fb6ace19e0496167bb3e667dcd91fa9f69b
   subpackages:
   - endpoint
+  - http
   - log
   - log/level
   - tracing/opentracing
   - transport/grpc
+  - transport/http
 - name: github.com/go-logfmt/logfmt
   version: 07c9b44f60d7ffdfb7d8efe1ad539965737836dc
 - name: github.com/golang/protobuf
@@ -33,6 +35,12 @@ imports:
   - ptypes/any
   - ptypes/duration
   - ptypes/timestamp
+- name: github.com/gorilla/context
+  version: 51ce91d2eaddeca0ef29a71d766bb3634dadf729
+- name: github.com/gorilla/handlers
+  version: 7e0847f9db758cdebd26c149d0ae9d5d0b9c98ce
+- name: github.com/gorilla/mux
+  version: e3702bed27f0d39777b0b37b664b6280e8ef8fbf
 - name: github.com/gorilla/websocket
   version: 95ba29eb981bbb27d92e1f70bf8a1949452d926b
 - name: github.com/hashicorp/golang-lru
@@ -105,7 +113,7 @@ imports:
   subpackages:
   - googleapis/rpc/status
 - name: google.golang.org/grpc
-  version: df014850f6dee74ba2fc94874043a9f3f75fbfd8
+  version: a02b0774206b209466313a0b525d2c738fe407eb
   subpackages:
   - balancer
   - balancer/base
