@@ -18,7 +18,7 @@ import (
 // predefined paths.
 func NewHTTPHandler(endpoints endpoint.Endpoints, options map[string][]http_kit.ServerOption) http.Handler {
 	m := mux.NewRouter()
-
+	makeGraphqlHandler(m, endpoints, options["Graphql"])
 	return m
 }
 

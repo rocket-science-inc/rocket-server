@@ -6,7 +6,7 @@ import (
 
 // ApiService describes the service.
 type ApiService interface {
-
+	
 }
 
 type basicApiService struct{}
