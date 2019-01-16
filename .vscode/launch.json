@@ -5,11 +5,11 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Users",
+            "name": "Api",
             "type": "go",
             "request": "launch",
             "mode": "debug",
-            "program": "${workspaceFolder}/server/users/cmd"
+            "program": "${workspaceFolder}/server/api/cmd"
         },
         {
             "name": "Events",

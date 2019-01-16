@@ -9,7 +9,7 @@ import (
 	
 	http_kit "github.com/go-kit/kit/transport/http"
 	log "github.com/go-kit/kit/log"
-	//level "github.com/go-kit/kit/log/level"
+	level "github.com/go-kit/kit/log/level"
 
 	http_handler "rocket-server/server/api/pkg/http/handler"
 	endpoint "rocket-server/server/api/pkg/endpoint"
@@ -24,10 +24,10 @@ func initHttpHandler(endpoints endpoint.Endpoints, g *group.Group) {
 	httpHandler := http_handler.NewHTTPHandler(endpoints, options)
 	httpListener, err := net.Listen("tcp", *httpAddr)
 	if err != nil {
-		logger.Log("transport", "HTTP", "during", "Listen", "err", err)
+		level.Error(logger).Log("transport", "HTTP", "during", "Listen", "err", err)
 	}
 	g.Add(func() error {
-		logger.Log("transport", "HTTP", "addr", *httpAddr)
+		level.Info(logger).Log("transport", "HTTP", "addr", *httpAddr)
 		return http.Serve(httpListener, httpHandler)
 	}, func(error) {
 		httpListener.Close()
