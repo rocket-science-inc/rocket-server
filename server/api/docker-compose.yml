@@ -6,9 +6,5 @@ services:
     build:
       context: ./
       dockerfile: Dockerfile
-    volumes:
-      - type: "bind"
-        source: "./"
-        target: "/go/src/rocket-server/server/api"
     ports:
       - 8082:8082

@@ -1,53 +1,37 @@
-# rocket-server
+# Server
 
-Setup new project
-glide init
-glide get github.com/go-kit/kit
+## Run on Windows
 
-# Create new microservice
+Install [Docker Toolbox](https://docs.docker.com/toolbox/overview/)
 
-Create new service
-kit new service [name]
-
-Update types and service
-
-Generate updated service
-kit generate service [name] --dmw --gorilla 
-
-Get dependencies
-glide get github.com/gorilla/mux
-glide get github.com/gorilla/handlers
-
-Test Run
-go run [name]/cmd/main.go
-
-Create DB
-mkdir [name]/pkg/db
-touch [name]/pkg/db/redis.go
-
+Create Docker Machine
 ```
-package db
-
-import (
-	"github.com/go-redis/redis"
-)
+docker-machine create rocket
 ```
 
-Get dependencies
-glide get github.com/go-redis/redis
+Connect console to created docker machine. Run command from machine environmet to configure your shell.
+```
+docker-machine env rocket
 
-Update services
+For example: @FOR /f "tokens=*" %i IN ('docker-machine env rocket') DO @%i
+```
 
-Generate Docker with Glide
-kit generate docker --glide
+Verify docker.
 
-Add new services endpoints
+```
+docker info
+```
 
-Generate new endpoints
-kit generate service [name] --dmw --gorilla
+## Build Server
 
-Add middleware with endpoints
-kit generate middleware auth -s [name] -e
+Go to server's root (rocket-server\server) directory to run Docker Compose.
 
-Add GRPC transport
-kit generate service [name] -w -t grpc
+```
+docker-compose build
+```
+
+## Run Server
+
+```
+docker-compose up
+```

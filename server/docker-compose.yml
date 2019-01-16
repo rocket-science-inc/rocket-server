@@ -1,0 +1,29 @@
+version: "3.2"
+
+services:
+  api:
+    container_name: api
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    ports:
+      - 8082
+    depends_on:
+      - events
+  
+  events:
+    container_name: events
+    build:
+      context: ./events
+      dockerfile: Dockerfile
+    ports:
+      - 8082
+    depends_on:
+      - events_db
+  events_db:
+    container_name: events_db
+    build:
+      context: ./events/pkg/db
+      dockerfile: Dockerfile
+    ports:
+      - 6379
