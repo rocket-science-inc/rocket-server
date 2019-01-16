@@ -12,7 +12,7 @@ import (
 
 // makeGraphqlHandler creates the handler logic
 func makeGraphqlHandler(m *mux.Router, endpoints endpoint.Endpoints, options []http_kit.ServerOption) {
-	m.Methods("GET").Path("/").Handler(handler.Playground("GraphQL playground", "/query"))
+	m.Methods("GET").Path("/").Handler(handler.Playground("GraphQL playground", "/graphql"))
 	m.Methods("GET","POST","OPTIONS").Path("/graphql").Handler(		
 		handler.GraphQL(graphql.NewExecutableSchema(graphql.Config {Resolvers: &graphql.Resolver{}}),
 	))
