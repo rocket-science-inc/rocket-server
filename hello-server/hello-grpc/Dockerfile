@@ -12,6 +12,7 @@ RUN curl -OL https://github.com/google/protobuf/releases/download/v3.6.1/protoc-
 
 RUN go get -u github.com/golang/protobuf/proto
 RUN go get -u github.com/golang/protobuf/protoc-gen-go
+RUN go get -u google.golang.org/genproto/googleapis/api/annotations
 
 RUN curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
 
