@@ -90,3 +90,9 @@ Rocket Server is distributed, highly available, and extremely scalable.
 > Testing
 
 > Cloud
+
+## License
+
+Copyright (c) Rocket Science Inc. All rights reserved.
+
+Licensed under the [MIT](https://github.com/rocket-science-inc/rocket-server/blob/master/LICENSE) License.
