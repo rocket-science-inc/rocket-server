@@ -15,9 +15,9 @@ RUN go get -u github.com/golang/protobuf/protoc-gen-go
 
 RUN curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
 
-RUN mkdir -p $GOPATH/src/gitlab.com/pantomath-io/demo-grpc
-ADD . $GOPATH/src/gitlab.com/pantomath-io/demo-grpc
-WORKDIR $GOPATH/src/gitlab.com/pantomath-io/demo-grpc
+RUN mkdir -p ${GOPATH}/src/gitlab.com/pantomath-io/demo-grpc
+ADD . ${GOPATH}/src/gitlab.com/pantomath-io/demo-grpc
+WORKDIR ${GOPATH}/src/gitlab.com/pantomath-io/demo-grpc
 
 RUN dep ensure
 
@@ -26,10 +26,10 @@ RUN curl -OL https://raw.githubusercontent.com/grpc-ecosystem/grpc-gateway/maste
     mkdir -p $GOPATH/src/google/api && \
     mv *.proto $GOPATH/src/google/api
 
-RUN protoc -I. -I$GOPATH/src --go_out=plugins=grpc:api api/api.proto
+RUN protoc -I api/ -I${GOPATH}/src --go_out=plugins=grpc:api api/api.proto
 
-#RUN go install ./server && go clean -cache
+RUN go install ./server && go clean -cache
 
-#CMD go run ./server
+CMD go run ./server
 
 EXPOSE 7777 7778
