@@ -28,7 +28,7 @@ Rocket Server is distributed, highly available, and extremely scalable.
 - [ ] unit tests
 - [x] docker
 
-> [Event service](https://github.com/rocket-science-inc/rocket-server/tree/master/server/event)
+> [Event service](https://github.com/rocket-science-inc/rocket-server/tree/master/server/events)
 - [ ] buisness logic
 - [ ] grpc
     - [ ] proto
@@ -42,7 +42,7 @@ Rocket Server is distributed, highly available, and extremely scalable.
 - [ ] unit tests
 - [x] docker
 
-> [User service](https://github.com/rocket-science-inc/rocket-server/tree/master/server/user)
+> [User service](https://github.com/rocket-science-inc/rocket-server/tree/master/server/users)
 - [ ] buisness logic
 - [ ] grpc
     - [ ] proto
@@ -69,7 +69,7 @@ Rocket Server is distributed, highly available, and extremely scalable.
 - [ ] data generation
 - [ ] benchmarking
 
-> [Auth service](https://github.com/rocket-science-inc/rocket-server/tree/master/server/user)
+> [Auth service](https://github.com/rocket-science-inc/rocket-server/tree/master/server/auth)
 - [ ] buisness logic
 - [ ] grpc
     - [ ] proto
