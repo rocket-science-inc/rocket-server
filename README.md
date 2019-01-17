@@ -2,6 +2,10 @@
 
 Rocket Server is distributed, highly available, and extremely scalable.
 
+## Quick Start
+
+[https://github.com/rocket-science-inc/rocket-server/server](https://github.com/rocket-science-inc/rocket-server/tree/master/server)
+
 ## Todo
 
 > Architecture
