@@ -11,7 +11,7 @@ import (
 
 	"golang.org/x/net/context"
 
-	"gitlab.com/pantomath-io/demo-grpc/api"
+	"rocket-server/hello-server/hello-grpc/api"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
 	"google.golang.org/grpc/metadata"
