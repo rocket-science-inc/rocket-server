@@ -18,14 +18,10 @@ Rocket Server is distributed, highly available, and extremely scalable.
 > [Api service](https://github.com/rocket-science-inc/rocket-server/tree/master/server/api)
 - [ ] buisness logic
 - [ ] grpc
-    - [ ] proto
-        - [ ] scheme
     - [ ] server
     - [ ] client
 - [ ] http server
-    - [ ] gorilla router
-- [ ] graphql
-    - [ ] scheme
+- [ ] graphql server
 - [ ] gateway
 - [ ] tracing
 - [ ] logging
@@ -35,12 +31,9 @@ Rocket Server is distributed, highly available, and extremely scalable.
 > [Event service](https://github.com/rocket-science-inc/rocket-server/tree/master/server/events)
 - [ ] buisness logic
 - [ ] grpc
-    - [ ] proto
-        - [ ] scheme
     - [ ] server
     - [ ] client
-- [ ] database
-    - [ ] redis
+- [ ] redis
 - [ ] tracing
 - [ ] logging
 - [ ] unit tests
@@ -49,12 +42,9 @@ Rocket Server is distributed, highly available, and extremely scalable.
 > [User service](https://github.com/rocket-science-inc/rocket-server/tree/master/server/users)
 - [ ] buisness logic
 - [ ] grpc
-    - [ ] proto
-        - [ ] scheme
     - [ ] server
     - [ ] client
-- [ ] database
-    - [ ] redis
+- [ ] redis
 - [ ] tracing
 - [ ] logging
 - [ ] unit tests
@@ -76,8 +66,6 @@ Rocket Server is distributed, highly available, and extremely scalable.
 > [Auth service](https://github.com/rocket-science-inc/rocket-server/tree/master/server/auth)
 - [ ] buisness logic
 - [ ] grpc
-    - [ ] proto
-        - [ ] scheme
     - [ ] server
     - [ ] client
 - [ ] oauth2
