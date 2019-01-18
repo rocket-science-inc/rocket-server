@@ -11,7 +11,7 @@ import (
 
 	"golang.org/x/net/context"
 
-	"rocket-server/hello-server/hello-grpc/api"
+	"gitlab.com/pantomath-io/demo-grpc/api"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
 	"google.golang.org/grpc/metadata"
@@ -131,8 +131,8 @@ func startRESTServer(address, grpcAddress, certFile string) error {
 
 // main start a gRPC server and waits for connection
 func main() {
-	grpcAddress := fmt.Sprintf("%s:%d", "localhost", 7777)
-	restAddress := fmt.Sprintf("%s:%d", "localhost", 7778)
+	grpcAddress := fmt.Sprintf("%s:%d", "0.0.0.0", 7777)
+	restAddress := fmt.Sprintf("%s:%d", "0.0.0.0", 7778)
 	certFile := "cert/server.crt"
 	keyFile := "cert/server.key"
 

@@ -10,28 +10,17 @@ RUN curl -OL https://github.com/google/protobuf/releases/download/v3.6.1/protoc-
     mv protoc3/include/* /usr/local/include/ && \
     ln -s /protoc3/bin/protoc /usr/bin/protoc
 
-RUN go get -u github.com/golang/protobuf/proto && \
-    go get -u google.golang.org/genproto/googleapis/api/annotations
-RUN git -C ${GOPATH}/src/github.com/golang/protobuf checkout "v1.2.0" && \
-    go install github.com/golang/protobuf/protoc-gen-go
+RUN go get -u github.com/grpc-ecosystem/grpc-gateway/protoc-gen-grpc-gateway && \
+    go get -u github.com/grpc-ecosystem/grpc-gateway/protoc-gen-swagger
 
-RUN curl https://glide.sh/get | sh
+RUN go get -u github.com/golang/protobuf/proto
+RUN git -C ${GOPATH}/src/github.com/golang/protobuf checkout "v1.2.0"
+RUN go install github.com/golang/protobuf/protoc-gen-go
 
-RUN mkdir -p ${GOPATH}/src/rocket-server/hello-server/hello-grpc
-ADD . ${GOPATH}/src/rocket-server/hello-server/hello-grpc
-WORKDIR ${GOPATH}/src/rocket-server/hello-server/hello-grpc
+WORKDIR ${GOPATH}/src/gitlab.com/pantomath-io/demo-grpc
+ADD . .
 
-RUN glide install
-
-
-RUN curl -OL https://raw.githubusercontent.com/grpc-ecosystem/grpc-gateway/master/third_party/googleapis/google/api/annotations.proto && \
-    curl -OL https://raw.githubusercontent.com/grpc-ecosystem/grpc-gateway/master/third_party/googleapis/google/api/http.proto && \
-    mkdir -p $GOPATH/src/google/api && \
-    mv *.proto $GOPATH/src/google/api
-
-RUN protoc -I api/ -I${GOPATH}/src --go_out=plugins=grpc:api api/api.proto
-
-#RUN go install ./server && go clean -cache
+RUN make
 
 CMD go run ./server
 

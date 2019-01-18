@@ -3,7 +3,7 @@ package main
 import (
 	"log"
 
-	"rocket-server/hello-server/hello-grpc/api"
+	"gitlab.com/pantomath-io/demo-grpc/api"
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
@@ -44,7 +44,7 @@ func main() {
 	}
 
 	// Initiate a connection with the server
-	conn, err = grpc.Dial("localhost:7777", grpc.WithTransportCredentials(creds), grpc.WithPerRPCCredentials(&auth))
+	conn, err = grpc.Dial("0.0.0.0:7777", grpc.WithTransportCredentials(creds), grpc.WithPerRPCCredentials(&auth))
 	if err != nil {
 		log.Fatalf("did not connect: %s", err)
 	}
