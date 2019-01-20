@@ -1,0 +1,13 @@
+version: "2"
+services:
+  hello:
+    build:
+      context: .
+      dockerfile: hello/Dockerfile
+    restart: always
+    volumes:
+    - .:/go/src/rocket-server/hello-server/hello-gokit
+    container_name: hello
+    ports:
+    - 8081:8081
+    - 8082:8082
