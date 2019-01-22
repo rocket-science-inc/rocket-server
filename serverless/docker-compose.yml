@@ -1,0 +1,12 @@
+version: "3.2"
+
+services:
+  serverless:
+    container_name: serverless
+    image: kkarczmarczyk/node-yarn
+    volumes:
+      - ./:/workspace
+    working_dir: /workspace
+    command: yarn
+    ports:
+      - 4000:4000
