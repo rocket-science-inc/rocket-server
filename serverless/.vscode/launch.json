@@ -1,0 +1,12 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "TS-Node Attach",
+            "type": "node",
+            "request": "attach",
+            "address": "localhost",
+            "port": 9229
+        }
+    ]
+}

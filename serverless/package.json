@@ -1,11 +1,12 @@
 {
   "name": "serverless",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "main": "index.js",
   "license": "MIT",
   "scripts": {
     "start": "ts-node ./src/index.ts",
-    "build": "tsc"
+    "watch": "nodemon --exec ts-node ./src/index.ts -e ts,json --watch ./src/**/*",
+    "debug": "nodemon --exec node --inspect-brk -r ts-node/register ./src/index.ts -e ts,json --watch ./src/**/*"
   },
   "dependencies": {
     "@graphql-modules/core": "^0.3.0",
@@ -17,5 +18,8 @@
     "reflect-metadata": "^0.1.13",
     "ts-node": "^8.0.1",
     "typescript": "^3.2.4"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.9"
   }
 }
