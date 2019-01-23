@@ -1,8 +1,37 @@
+scalar DateTime
+
 type Event {
     id: ID!
-    title: String!
+    title: String
+    description: String
+    location: String
+    createdAt: DateTime!
+    members: [User]
+    organizers: [User]
+}
+
+type User {
+    id: ID!
+    authToken: String
+    createdAt: DateTime!
+    firstName: String
+    lastName: String
+    middleName: String
+    email: String
+    isEmailVerified: Boolean
+    mobile: String
+    dateOfBirth: String
+    companyName: String
 }
 
 type Query {
-    getEvents: [Event!]!
+    events: [Event]
+    event(id: ID!): Event
+    users: [User]
+    user(id: ID!): User
+}
+
+type Mutation {
+    createEvent (title: String!): Event!
+    createUser (email: String!): User!
 }

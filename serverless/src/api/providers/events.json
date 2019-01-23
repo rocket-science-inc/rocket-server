@@ -1,6 +1,11 @@
 [
     {
-        "id": "1",
-        "title": "Ukrainian Golang User Groups"
+        "id": 1,
+        "title": "Ukrainian Golang User Groups",
+        "description": "",
+        "location": "",
+        "createdAt": "",
+        "members": [1],
+        "organizers": [1]
     }
 ]

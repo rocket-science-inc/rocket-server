@@ -1,0 +1,15 @@
+[
+    {
+        "id": 1,
+        "authToken": null,
+        "createdAt": "",
+        "firstName": "",
+        "lastName": null,
+        "middleName": null,
+        "email": "",
+        "isEmailVerified": true,
+        "mobile": null,
+        "dateOfBirth": null,
+        "companyName": ""
+    }
+]
