@@ -1,11 +1,13 @@
+import { Event } from '../types/event';
+
 export default {
     Event: {
-        id: event => event.id,
-        title: event => event.title,
-        description: event => event.description,
-        location: event => event.location,
-        createdAt: event => event.createdAt,
-        members: event => event.members,
-        organizers: event => event.organizers
+        id: (event: Event) => event.id,
+        title: (event: Event) => event.title,
+        description: (event: Event) => event.description,
+        location: (event: Event) => event.location,
+        createdAt: (event: Event) => event.createdAt,
+        members: (event: Event) => event.members,
+        organizers: (event: Event) => event.organizers
     },
 };

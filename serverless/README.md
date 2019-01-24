@@ -9,5 +9,5 @@ yarn start
 ```
 ### Browse
 ```
-http://localhost:4000/
+http://localhost:4000/graphql
 ```

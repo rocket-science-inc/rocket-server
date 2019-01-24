@@ -1,16 +1,12 @@
-import { Injectable } from '@graphql-modules/di';
+import { User } from '../types/user';
 import users from './users.json';
 
-@Injectable()
 export class UserProvider {
-    getUsers() { 
-        console.log(users);
+    public getUsers(): User[] { 
         return users; 
     }
-
-    getUser(id: number) {
-        const user = users.find(({ id }) => id === id);
-        console.log(user);
+    public getUser(id: number): User {
+        const user: User = users.find((user: User) => user.id === id);
         return user; 
     }
 }

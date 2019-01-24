@@ -1,17 +1,40 @@
-import { Injectable } from '@graphql-modules/di';
-import { ModuleContext } from '@graphql-modules/core';
+import { Event } from '../types/event';
+import jsonEvents from './events.json';
+import { User } from '../types/user';
 import { UserProvider } from './user.provider';
-import events from './events.json';
 
-@Injectable()
+const userProvider: UserProvider = new UserProvider();
 export class EventProvider {
-    getEvents() {
-        console.log(events);
-        return events; 
+    public getEvents(): Event[] {
+        const events: Event[] = [];
+        jsonEvents.forEach(event => {
+            events.push(this.extendEvent(event));     
+        });
+        return events;
     }
-    getEvent(id: number) { 
-        let event = events.find(({ id }) => id === id);
-        console.log(event);
+
+    public getEvent(id: number): Event {
+        const jsonEvent: any = jsonEvents.find(id => id === id);
+        return this.extendEvent(jsonEvent); 
+    }
+
+    private getUsersByIds(ids: number[]): User[] {
+        const users: User[] = [];
+        ids.forEach(userId => {
+            const user: User = userProvider.getUser(userId);
+            users.push(user);
+        })
+        return users;
+    }
+
+    private extendEvent(jsonEvent: any): Event {
+        const members: User[] = this.getUsersByIds(jsonEvent.members);
+        const organizers: User[] = this.getUsersByIds(jsonEvent.organizers);
+        
+        let event = Object.assign({}, jsonEvent);
+        event.members = members;
+        event.organizers = organizers;
+
         return event; 
     }
 }

@@ -5,15 +5,15 @@
   "license": "MIT",
   "scripts": {
     "start": "ts-node ./src/index.ts",
-    "watch": "nodemon --exec ts-node ./src/index.ts -e ts,json --watch ./src/**/*",
+    "watch": "nodemon --exec ts-node ./src/index.ts -e ts,json",
     "debug": "nodemon --exec node --inspect-brk -r ts-node/register ./src/index.ts -e ts,json --watch ./src/**/*"
   },
   "dependencies": {
     "@graphql-modules/core": "^0.3.0",
-    "@graphql-modules/di": "^0.3.0",
     "@graphql-modules/epoxy": "^0.3.0",
     "@graphql-modules/sonar": "^0.3.0",
     "apollo-server-express": "^2.3.1",
+    "express": "^4.16.4",
     "graphql": "^14.1.1",
     "reflect-metadata": "^0.1.13",
     "ts-node": "^8.0.1",
