@@ -11,6 +11,6 @@ export default {
     createEvent: (root, args) => eventProvider.createEvent(args.title),
     deleteEvent: (root, args) => eventProvider.deleteEvent(+args.id),
     createUser: (root, args) => userProvider.createUser(args.email),
-    deleteUser: (root, args) => userProvider.getUser(+args.id),
+    deleteUser: (root, args) => userProvider.deleteUser(+args.id),
   },
 };

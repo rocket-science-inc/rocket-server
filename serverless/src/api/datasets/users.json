@@ -1,0 +1,67 @@
+[
+    {
+        "id": 100,
+        "authToken": "",
+        "createdAt": "2019-01-25T13:34:00.500Z",
+        "firstName": "Alexander",
+        "lastName": "",
+        "middleName": "",
+        "email": "alex.agency@gmail.com",
+        "isEmailVerified": true,
+        "mobile": "",
+        "dateOfBirth": "",
+        "companyName": "MicroFocus"
+    },
+    {
+        "id": 200,
+        "authToken": "",
+        "createdAt": "2019-01-25T13:35:00.500Z",
+        "firstName": "Maxim",
+        "lastName": "",
+        "middleName": "",
+        "email": "",
+        "isEmailVerified": false,
+        "mobile": "",
+        "dateOfBirth": "",
+        "companyName": "MicroFocus"
+    },
+    {
+        "id": 300,
+        "authToken": "",
+        "createdAt": "2019-01-25T13:36:00.500Z",
+        "firstName": "Andrew",
+        "lastName": "",
+        "middleName": "",
+        "email": "",
+        "isEmailVerified": false,
+        "mobile": "",
+        "dateOfBirth": "",
+        "companyName": "MicroFocus"
+    },
+    {
+        "id": 400,
+        "authToken": "",
+        "createdAt": "2019-01-25T13:37:00.500Z",
+        "firstName": "Eugene",
+        "lastName": "",
+        "middleName": "",
+        "email": "",
+        "isEmailVerified": false,
+        "mobile": "",
+        "dateOfBirth": "",
+        "companyName": ""
+    },
+    {
+        "id": 500,
+        "authToken": "",
+        "createdAt": "2019-01-25T13:38:00.500Z",
+        "firstName": "Dmytro",
+        "lastName": "",
+        "middleName": "",
+        "email": "",
+        "isEmailVerified": false,
+        "mobile": "",
+        "dateOfBirth": "",
+        "companyName": ""
+    }
+]

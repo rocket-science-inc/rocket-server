@@ -1,5 +1,5 @@
 import { Event } from '../types/event';
-import  jsonEvents from './events.json';
+import  jsonEvents from '../datasets/events.json';
 import { User } from '../types/user';
 import { UserProvider } from './user.provider';
 
@@ -41,11 +41,14 @@ export class EventProvider {
         }
         jsonEvents.splice(index, 1);
         const deletedEvent: any = jsonEvents.find((jsonEvent: any) => jsonEvent.id === id);
-        return deletedEvent === null; 
+        return deletedEvent === undefined; 
     }
 
     private getUsersByIds(ids: number[]): User[] {
         const users: User[] = [];
+        if (ids === undefined) {
+            return users;    
+        }
         ids.forEach(userId => {
             const user: User = userProvider.getUser(userId);
             users.push(user);

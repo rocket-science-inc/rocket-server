@@ -1,5 +1,5 @@
 import { User } from '../types/user';
-import jsonUsers from './users.json';
+import jsonUsers from '../datasets/users.json';
 
 export class UserProvider {
     public getUsers(): User[] { 
@@ -38,6 +38,6 @@ export class UserProvider {
         }
         jsonUsers.splice(index, 1);
         const deletedUser: any = jsonUsers.find((jsonUser: any) => jsonUser.id === id);
-        return deletedUser === null; 
+        return deletedUser === undefined; 
     }
 }
