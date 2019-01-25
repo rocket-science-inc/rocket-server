@@ -1,5 +1,5 @@
 import { Event } from '../types/event';
-import  events from './events.json';
+import  jsonEvents from './events.json';
 import { User } from '../types/user';
 import { UserProvider } from './user.provider';
 
@@ -7,21 +7,21 @@ const userProvider: UserProvider = new UserProvider();
 export class EventProvider {
     public getEvents(): Event[] {
         const extendedEvents: Event[] = [];
-        events.forEach(jsonEvent => {
+        jsonEvents.forEach((jsonEvent: any) => {
             extendedEvents.push(this.extendEvent(jsonEvent));     
         });
         return extendedEvents;
     }
 
     public getEvent(id: number): Event {
-        const jsonEvent: any = events.find(jsonEvent => jsonEvent.id === id);
+        const jsonEvent: any = jsonEvents.find((jsonEvent: any) => jsonEvent.id === id);
         return this.extendEvent(jsonEvent); 
     }
 
     public createEvent(title: string): Event {
-        var ids: number[] = events.map(jsonEvent => jsonEvent.id);
+        var ids: number[] = jsonEvents.map((jsonEvent: any) => jsonEvent.id);
         const nextId: number = Math.max(...ids) + 1;
-        events.push({
+        jsonEvents.push({
             id: nextId,
             title: title,
             createdAt: new Date().toDateString(),
@@ -34,13 +34,13 @@ export class EventProvider {
     }
 
     public deleteEvent(id: number): boolean {
-        const jsonEvent: any = events.find(jsonEvent => jsonEvent.id === id);
-        const index: number = events.indexOf(jsonEvent, 0);
+        const jsonEvent: any = jsonEvents.find((jsonEvent: any) => jsonEvent.id === id);
+        const index: number = jsonEvents.indexOf(jsonEvent, 0);
         if (index === -1) {
             return false;
         }
-        events.splice(index, 1);
-        const deletedEvent: any = events.find(jsonEvent => jsonEvent.id === id);
+        jsonEvents.splice(index, 1);
+        const deletedEvent: any = jsonEvents.find((jsonEvent: any) => jsonEvent.id === id);
         return deletedEvent === null; 
     }
 

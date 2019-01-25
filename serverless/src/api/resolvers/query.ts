@@ -8,9 +8,9 @@ const userProvider = new UserProvider();
 
 export default {
   Query: {
-    events: (events: Event[]) => eventProvider.getEvents(),
-    event: (event: Event, id: number) => eventProvider.getEvent(id),
-    users: (users: User[]) => userProvider.getUsers(),
-    user: (user: User, id: number) => userProvider.getUser(id),
+    events: () => eventProvider.getEvents(),
+    event: (root, args) => eventProvider.getEvent(+args.id),
+    users: () => userProvider.getUsers(),
+    user: (root, args) => userProvider.getUser(+args.id),
   },
 };

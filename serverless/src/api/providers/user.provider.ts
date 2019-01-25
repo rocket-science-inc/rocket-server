@@ -1,22 +1,20 @@
 import { User } from '../types/user';
-import users from './users.json';
+import jsonUsers from './users.json';
 
 export class UserProvider {
     public getUsers(): User[] { 
-        return users; 
+        return jsonUsers; 
     }
 
     public getUser(id: number): User {
-        console.log(users);
-        const jsonUser: any = users.find((user: User) => user.id == id);
-        console.log(jsonUser);
-        return jsonUser; 
+        const jsonUser: any = jsonUsers.find((jsonUser: any) => jsonUser.id === id);
+        return jsonUser;
     }
 
     public createUser(email: string): User {
-        var ids: number[] = users.map(user => user.id);
+        var ids: number[] = jsonUsers.map((jsonUser: any) => jsonUser.id);
         const nextId: number = Math.max(...ids) + 1;
-        users.push({
+        jsonUsers.push({
             id: nextId,
             email: email,
             createdAt: new Date().toDateString(),
@@ -33,13 +31,13 @@ export class UserProvider {
     }
 
     public deleteUser(id: number): boolean {
-        const jsonUser: any = users.find(user => user.id === id);
-        const index: number = users.indexOf(jsonUser, 0);
+        const jsonUser: any = jsonUsers.find((jsonUser: any) => jsonUser.id === id);
+        const index: number = jsonUsers.indexOf(jsonUser, 0);
         if (index === -1) {
             return false;
         }
-        users.splice(index, 1);
-        const deletedUser: any = users.find(user => user.id === id);
+        jsonUsers.splice(index, 1);
+        const deletedUser: any = jsonUsers.find((jsonUser: any) => jsonUser.id === id);
         return deletedUser === null; 
     }
 }

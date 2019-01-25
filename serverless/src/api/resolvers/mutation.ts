@@ -8,9 +8,9 @@ const userProvider = new UserProvider();
 
 export default {
   Mutation: {
-    createEvent: (event: Event, title: string) => eventProvider.createEvent(title),
-    deleteEvent: (event: Event, id: number) => eventProvider.deleteEvent(id),
-    createUser: (user: User, email: string) => userProvider.createUser(email),
-    deleteUser: (user: User, id: number) => userProvider.getUser(id),
+    createEvent: (root, args) => eventProvider.createEvent(args.title),
+    deleteEvent: (root, args) => eventProvider.deleteEvent(+args.id),
+    createUser: (root, args) => userProvider.createUser(args.email),
+    deleteUser: (root, args) => userProvider.getUser(+args.id),
   },
 };
