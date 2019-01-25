@@ -3,6 +3,8 @@ Serverless
 
 This is Functions as a Service (FaaS) serverless container which is used as a temprorary server-side application while the Rocker Server is main server-side logic and still been writting by the application developer unlike main architecture, it’s run in stateless compute container.
 
+![image](https://user-images.githubusercontent.com/1122708/51774779-253b4700-20fc-11e9-89c9-37ccbadbf5f6.png)
+
 ### Build with Docker
 ```
 docker-compose build
