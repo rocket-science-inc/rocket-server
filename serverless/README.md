@@ -1,11 +1,15 @@
-# Serverless
+Serverless
+===============================
 
-This is serverless version of The Rocker Server.
+This is Functions as a Service (FaaS) serverless container which is used as a temprorary server-side application while the Rocker Server is main server-side logic and still been writting by the application developer unlike main architecture, it’s run in stateless compute container.
 
-### Run with Yarn
+### Build with Docker
 ```
-yarn
-yarn start
+docker-compose build
+```
+### Run with Docker
+```
+docker-compose up
 ```
 ### Browse
 ```
@@ -55,4 +59,25 @@ mutation {
   # Remove event with id equal 300:
   deleteEvent(id: 300)
 }
+```
+
+## Development
+
+### Resolve dependencies
+```
+yarn
+```
+### Run with Yarn
+```
+yarn start
+```
+### Watch with Yarn
+```
+yarn watch
+```
+### Debug with VSCode
+```
+yarn debug
+
+Start Debugging in VScode
 ```
