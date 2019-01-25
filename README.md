@@ -2,6 +2,12 @@
 
 Rocket Server is distributed, highly available, and extremely scalable.
 
+## Serverless (FaaS)
+
+[https://github.com/rocket-science-inc/rocket-server/serverless](https://github.com/rocket-science-inc/rocket-server/tree/master/serverless)
+
+![image](https://user-images.githubusercontent.com/1122708/51774779-253b4700-20fc-11e9-89c9-37ccbadbf5f6.png)
+
 ## Quick Start
 
 [https://github.com/rocket-science-inc/rocket-server/server](https://github.com/rocket-science-inc/rocket-server/tree/master/server)
@@ -14,11 +20,11 @@ Rocket Server is distributed, highly available, and extremely scalable.
 - [x] frameworks
 - [x] package management
 - [x] continuous integration
+- [x] serverless
 
 > [Api service](https://github.com/rocket-science-inc/rocket-server/tree/master/server/api)
 - [ ] buisness logic
 - [ ] grpc
-    - [ ] server
     - [ ] client
 - [ ] http server
 - [ ] graphql server
@@ -67,7 +73,6 @@ Rocket Server is distributed, highly available, and extremely scalable.
 - [ ] buisness logic
 - [ ] grpc
     - [ ] server
-    - [ ] client
 - [ ] oauth2
 - [ ] jwt
 - [ ] tracing
