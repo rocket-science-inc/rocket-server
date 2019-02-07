@@ -1,16 +1,33 @@
-hash: 2300aac8c0e91288532c89c92442723ffe098c9d5731ed3171f06bd5dd0de6cf
-updated: 2019-01-13T10:22:32.088486+02:00
+hash: 653eaa9fea906621fdeb9f40085370169f9e3c6ef09efac1da91fe2e7705c477
+updated: 2019-02-07T16:39:19.8037933+02:00
 imports:
+- name: github.com/beorn7/perks
+  version: 3a771d992973f24aa725d07868b467d1ddfceafb
+  subpackages:
+  - quantile
 - name: github.com/go-kit/kit
   version: 12210fb6ace19e0496167bb3e667dcd91fa9f69b
   subpackages:
   - endpoint
   - log
+  - log/level
+  - metrics
+  - metrics/internal/lv
+  - metrics/prometheus
   - tracing/opentracing
   - transport/grpc
   - transport/http
 - name: github.com/go-logfmt/logfmt
   version: 07c9b44f60d7ffdfb7d8efe1ad539965737836dc
+- name: github.com/go-redis/redis
+  version: 22be8a3eaf992c828cecb69dc07348313bf08d2e
+  subpackages:
+  - internal
+  - internal/consistenthash
+  - internal/hashtag
+  - internal/pool
+  - internal/proto
+  - internal/util
 - name: github.com/golang/protobuf
   version: aa810b61a9c79d51363740d207bb46cf8e620ed5
   subpackages:
@@ -21,10 +38,10 @@ imports:
   - ptypes/timestamp
 - name: github.com/kr/logfmt
   version: b84e30acd515aadc4b783ad4ff83aff3299bdfe0
-- name: github.com/mediocregopher/radix.v2
-  version: b67df6e626f993b64b3ca9f4b8630900e61002e3
+- name: github.com/matttproud/golang_protobuf_extensions
+  version: c182affec369e30f25d3eb8cd8a478dee585ae7d
   subpackages:
-  - redis
+  - pbutil
 - name: github.com/oklog/oklog
   version: e3ad1c411c27b4bc18c5facb9331820d141a5a54
   subpackages:
@@ -36,8 +53,30 @@ imports:
   subpackages:
   - ext
   - log
+- name: github.com/prometheus/client_golang
+  version: 505eaef017263e299324067d40ca2c48f6a2cf50
+  subpackages:
+  - prometheus
+  - prometheus/internal
+  - prometheus/promhttp
+- name: github.com/prometheus/client_model
+  version: fd36f4220a901265f90734c3183c5f0c91daa0b8
+  subpackages:
+  - go
+- name: github.com/prometheus/common
+  version: cfeb6f9992ffa54aaa4f2170ade4067ee478b250
+  subpackages:
+  - expfmt
+  - internal/bitbucket.org/ww/goautoneg
+  - model
+- name: github.com/prometheus/procfs
+  version: 488faf799f863e27e50c516468f76ae8f1da20a5
+  subpackages:
+  - internal/util
+  - nfs
+  - xfs
 - name: golang.org/x/net
-  version: 915654e7eabcea33ae277abbecf52f0d8b7a9fdc
+  version: 65e2d4e15006aab9813ff8769e768bbf4bb667a0
   subpackages:
   - context
   - http/httpguts
@@ -47,7 +86,7 @@ imports:
   - internal/timeseries
   - trace
 - name: golang.org/x/sys
-  version: 48ac38b7c8cbedd50b1613c0fccacfc7d88dfcdf
+  version: 41f3e6584952bb034a481797859f6ab34b6803bd
   subpackages:
   - unix
 - name: golang.org/x/text
@@ -58,11 +97,11 @@ imports:
   - unicode/bidi
   - unicode/norm
 - name: google.golang.org/genproto
-  version: db91494dd46c1fdcbbde05e5ff5eb56df8f7d79a
+  version: 4b09977fb92221987e99d190c8f88f2c92727a29
   subpackages:
   - googleapis/rpc/status
 - name: google.golang.org/grpc
-  version: df014850f6dee74ba2fc94874043a9f3f75fbfd8
+  version: a02b0774206b209466313a0b525d2c738fe407eb
   subpackages:
   - balancer
   - balancer/base

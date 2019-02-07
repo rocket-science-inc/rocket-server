@@ -1,12 +1,9 @@
 package endpoint
 
 import (
-	"context"
-
 	endpoint "github.com/go-kit/kit/endpoint"
-	
+
 	service "rocket-server/server/events/pkg/service"
-	types "rocket-server/server/events/pkg/types"
 )
 
 // Endpoints collects all of the endpoints that compose a profile service. It's
@@ -31,26 +28,6 @@ func New(s service.EventsService, mdw map[string][]endpoint.Middleware) Endpoint
 		eps.AddEventEndpoint = m(eps.AddEventEndpoint)
 	}
 	return eps
-}
-
-// GetEvents implements Service. Primarily useful in a client.
-func (en Endpoints) GetEvents(ctx context.Context) (events []types.Event, error error) {
-	request := GetEventsRequest{}
-	response, err := en.GetEventsEndpoint(ctx, request)
-	if err != nil {
-		return
-	}
-	return response.(GetEventsResponse).Events, response.(GetEventsResponse).Error
-}
-
-// AddEvent implements Service. Primarily useful in a client.
-func (en Endpoints) AddEvent(ctx context.Context, e types.Event) (event types.Event, error error) {
-	request := AddEventRequest{E: e}
-	response, err := en.AddEventEndpoint(ctx, request)
-	if err != nil {
-		return
-	}
-	return response.(AddEventResponse).Event, response.(AddEventResponse).Error
 }
 
 // Failer is an interface that should be implemented by response types.

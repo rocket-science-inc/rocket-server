@@ -4,7 +4,7 @@ services:
   redisdb:
     container_name: redisdb
     build:
-      context: ./pkg/db
+      context: ./pkg/database
       dockerfile: Dockerfile
     ports:
       - 6379:6379  
