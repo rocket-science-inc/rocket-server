@@ -7,10 +7,7 @@ jobs:
     machine: true # Use a Linux VM instead of docker environment
     working_directory: ~/{{ORG_NAME}}/{{REPO_NAME}}
     steps:
-      - checkout # check out source code to working directory
-      - run:
-          name: Build Serverless
-          command: docker-compose --file ./serverless/docker-compose.yml build      
+      - checkout # check out source code to working directory     
       - run:
           name: Build Api service
           command: docker-compose --file ./server/api/docker-compose.yml build

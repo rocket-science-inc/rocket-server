@@ -4,7 +4,7 @@ Rocket Server is distributed, highly available, and extremely scalable.
 
 ## Serverless (FaaS)
 
-[https://github.com/rocket-science-inc/rocket-server/serverless](https://github.com/rocket-science-inc/rocket-server/tree/master/serverless)
+[https://github.com/rocket-science-inc/rocket-serverless](https://github.com/rocket-science-inc/rocket-serverless/tree/master)
 
 ![image](https://user-images.githubusercontent.com/1122708/51774779-253b4700-20fc-11e9-89c9-37ccbadbf5f6.png)
 
