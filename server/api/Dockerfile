@@ -1,7 +1,7 @@
 FROM golang:1
 
 # setup environment
-ENV VERSION             "0.0.1-beta"
+ENV VERSION             "0.0.2-beta"
 ENV SERVICE_PATH        rocket-server/server/api
 
 LABEL service.api.version=${VERSION}
@@ -24,4 +24,4 @@ RUN go test -v ./... && go clean -testcache
 CMD go run ./cmd
 
 # network
-EXPOSE 8082
+EXPOSE 8080 8081

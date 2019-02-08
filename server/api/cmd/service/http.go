@@ -1,43 +1,43 @@
 package service
 
 import (
-	"net"	
-	http "net/http"
+	"net"
+	httpgo "net/http"
 
 	group "github.com/oklog/oklog/pkg/group"
 	opentracinggo "github.com/opentracing/opentracing-go"
-	
-	http_kit "github.com/go-kit/kit/transport/http"
-	log "github.com/go-kit/kit/log"
-	level "github.com/go-kit/kit/log/level"
 
-	http_handler "rocket-server/server/api/pkg/http/handler"
+	log "github.com/go-kit/kit/log"
+	opentracing "github.com/go-kit/kit/tracing/opentracing"
+	httpkit "github.com/go-kit/kit/transport/http"
+
 	endpoint "rocket-server/server/api/pkg/endpoint"
+	http "rocket-server/server/api/pkg/transport/http"
 )
 
-var httpAddr = fs.String("http-addr", ":8080", "HTTP listen address")
+var httpAddr = fs.String("http-addr", ":8081", "HTTP listen address")
 
 func initHttpHandler(endpoints endpoint.Endpoints, g *group.Group) {
-	options := defaultHttpOptions(logger, tracer)
-	// Add your http options here
+	options := getHttpOptions(logger, tracer)
 
-	httpHandler := http_handler.NewHTTPHandler(endpoints, options)
+	httpHandler := http.NewHTTPHandler(endpoints, options)
 	httpListener, err := net.Listen("tcp", *httpAddr)
 	if err != nil {
-		level.Error(logger).Log("transport", "HTTP", "during", "Listen", "err", err)
+		logger.Log("transport", "HTTP", "during", "Listen", "err", err)
 	}
 	g.Add(func() error {
-		level.Info(logger).Log("transport", "HTTP", "addr", *httpAddr)
-		return http.Serve(httpListener, httpHandler)
+		logger.Log("transport", "HTTP", "addr", *httpAddr)
+		return httpgo.Serve(httpListener, httpHandler)
 	}, func(error) {
 		httpListener.Close()
 	})
 
 }
 
-func defaultHttpOptions(logger log.Logger, tracer opentracinggo.Tracer) map[string][]http_kit.ServerOption {
-	options := map[string][]http_kit.ServerOption {
-
+func getHttpOptions(logger log.Logger, tracer opentracinggo.Tracer) map[string][]httpkit.ServerOption {
+	options := map[string][]httpkit.ServerOption{
+		"AddEvent":  {httpkit.ServerErrorEncoder(http.ErrorEncoder), httpkit.ServerErrorLogger(logger), httpkit.ServerBefore(opentracing.HTTPToContext(tracer, "AddEvent", logger))},
+		"GetEvents": {httpkit.ServerErrorEncoder(http.ErrorEncoder), httpkit.ServerErrorLogger(logger), httpkit.ServerBefore(opentracing.HTTPToContext(tracer, "GetEvents", logger))},
 	}
 	return options
 }
