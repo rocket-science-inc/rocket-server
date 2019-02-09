@@ -1,8 +1,6 @@
 # Refer to https://gqlgen.com/config/
 # for detailed .gqlgen.yml documentation.
 
-# go:generate go run cmd/gqlgen.go -v -c cmd/gqlgen.yml
-
 schema: ./pkg/transport/http/graphql/*.graphql
 
 exec:
