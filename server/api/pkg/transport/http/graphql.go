@@ -28,7 +28,7 @@ func makeGraphQLHandler(m *mux.Router, endpoints endpoint.Endpoints, options []h
 		)(handler.GraphQL(graphql.NewExecutableSchema(
 				graphql.Config {
 					Resolvers: &graphql.Resolver { 
-						e: endpoints,
+						Endpoints: endpoints,
 					},
 				},
 			),

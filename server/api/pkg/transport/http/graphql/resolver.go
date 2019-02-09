@@ -8,7 +8,7 @@ import (
 )
 
 type Resolver struct {
-	e endpoint.Endpoints
+	Endpoints endpoint.Endpoints
 }
 
 func (r *Resolver) Mutation() MutationResolver {
@@ -34,5 +34,5 @@ func (r *mutationResolver) DeleteEvent(ctx context.Context, id string) (string, 
 type queryResolver struct{ *Resolver }
 
 func (r *queryResolver) Events(ctx context.Context) ([]types.Event, error) {
-	return r.e.GetEvents(ctx)
+	return r.Endpoints.GetEvents(ctx)
 }
