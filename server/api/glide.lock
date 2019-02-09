@@ -1,13 +1,18 @@
-hash: 703b50a6be153f5b8ef7f5449187a590418275e456f4226382332d3cd84493b1
-updated: 2019-02-08T23:10:41.131144+02:00
+hash: 15a97932471121866056d64df57161002c7ad7fff3d5763e99f7a18d9541c2d1
+updated: 2019-02-08T23:41:53.85875+02:00
 imports:
 - name: github.com/99designs/gqlgen
   version: da1e07f5876c0fb79cbad19006f7135be08590d6
   subpackages:
+  - cmd
+  - codegen
+  - codegen/templates
   - complexity
   - graphql
   - graphql/introspection
   - handler
+  - internal/gopath
+  - internal/imports
 - name: github.com/agnivade/levenshtein
   version: 185086b29d40851ac6c41150d8e497ea2b9520e9
 - name: github.com/beorn7/perks
@@ -58,6 +63,8 @@ imports:
   subpackages:
   - ext
   - log
+- name: github.com/pkg/errors
+  version: ffb6e22f01932bf7ac35e0bad9be11f01d1c8685
 - name: github.com/prometheus/client_golang
   version: 505eaef017263e299324067d40ca2c48f6a2cf50
   subpackages:
@@ -80,6 +87,8 @@ imports:
   - internal/util
   - nfs
   - xfs
+- name: github.com/urfave/cli
+  version: cfb38830724cc34fedffe9a2a29fb54fa9169cd1
 - name: github.com/vektah/gqlparser
   version: 4118a915244a726381fefaf7521051aee21d5a50
   subpackages:
@@ -93,8 +102,25 @@ imports:
   version: 915654e7eabcea33ae277abbecf52f0d8b7a9fdc
   subpackages:
   - context
+- name: golang.org/x/tools
+  version: 36f37f8f5c8169a4482a16bcccc34b26413e704c
+  subpackages:
+  - go/ast/astutil
+  - go/buildutil
+  - go/gcexportdata
+  - go/internal/cgo
+  - go/internal/gcimporter
+  - go/internal/packagesdriver
+  - go/loader
+  - go/packages
+  - imports
+  - internal/fastwalk
+  - internal/gopathwalk
+  - internal/semver
 - name: google.golang.org/grpc
   version: a02b0774206b209466313a0b525d2c738fe407eb
   subpackages:
   - metadata
+- name: gopkg.in/yaml.v2
+  version: 51d6538a90f86fe93ac480b35f37b2be17fef232
 testImports: []

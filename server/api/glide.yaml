@@ -27,3 +27,5 @@ import:
   - prometheus/promhttp
 - package: github.com/99designs/gqlgen
   version: ^0.7.2
+- package: github.com/urfave/cli
+  version: ^1.20.0

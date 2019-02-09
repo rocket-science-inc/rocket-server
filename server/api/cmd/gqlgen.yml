@@ -1,0 +1,30 @@
+# Refer to https://gqlgen.com/config/
+# for detailed .gqlgen.yml documentation.
+
+# go:generate go run cmd/gqlgen.go -v -c cmd/gqlgen.yml
+
+schema: ./pkg/transport/http/graphql/*.graphql
+
+exec:
+  filename: ./pkg/transport/http/graphql/generated.go
+  package: graphql
+
+resolver:
+  filename: ./pkg/transport/http/graphql/resolver.go
+  type: Resolver
+
+# generate absent models
+model:
+  filename: ./pkg/types/types_gen.go
+  package: types
+
+# binding to field names by tag provided
+struct_tag: json
+
+# resuse existing models
+models:
+  Event:
+    model: rocket-server/server/api/pkg/types.Event
+  # Custom scalars point to the name without the Marshal|Unmarshal prefix
+  Timestamp:
+    model: 	rocket-server/server/api/pkg/types.Timestamp

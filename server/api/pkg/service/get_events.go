@@ -8,8 +8,15 @@ import (
 
 func (b *basicApiService) GetEvents(ctx context.Context) (events []types.Event, err error) {
 	// TODO implement the business logic of GetEvents
-	panic("not implemented")
-	return events, err
+	//panic("not implemented")
+	
+	var data []types.Event
+	data = append(data,
+		types.Event {
+			ID: "1",
+		},
+	)
+	return data, nil
 }
 
 func (l loggingMiddleware) GetEvents(ctx context.Context) (events []types.Event, err error) {
