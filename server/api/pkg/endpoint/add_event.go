@@ -10,7 +10,7 @@ import (
 )
 
 // AddEvent implements Service. Primarily useful in a client.
-func (en Endpoints) AddEvent(ctx context.Context, e types.Event) (event types.Event, err error) {
+func (en Endpoints) AddEvent(ctx context.Context, e types.NewEvent) (event types.Event, err error) {
 	request := AddEventRequest{E: e}
 	response, err := en.AddEventEndpoint(ctx, request)
 	if err != nil {
@@ -21,7 +21,7 @@ func (en Endpoints) AddEvent(ctx context.Context, e types.Event) (event types.Ev
 
 // AddEventRequest collects the request parameters for the AddEvent method.
 type AddEventRequest struct {
-	E types.Event `json:"e"`
+	E types.NewEvent `json:"e"`
 }
 
 // AddEventResponse collects the response parameters for the AddEvent method.

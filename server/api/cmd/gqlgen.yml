@@ -6,7 +6,7 @@
 schema: ./pkg/transport/http/graphql/*.graphql
 
 exec:
-  filename: ./pkg/transport/http/graphql/generated.go
+  filename: ./pkg/transport/http/graphql/server.go
   package: graphql
 
 resolver:
@@ -23,6 +23,8 @@ struct_tag: json
 
 # resuse existing models
 models:
+  NewEvent:
+    model: rocket-server/server/api/pkg/types.NewEvent
   Event:
     model: rocket-server/server/api/pkg/types.Event
   # Custom scalars point to the name without the Marshal|Unmarshal prefix

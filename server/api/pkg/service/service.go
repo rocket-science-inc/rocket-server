@@ -9,7 +9,7 @@ import (
 // ApiService describes the service.
 type ApiService interface {
 	GetEvents(ctx context.Context) (events []types.Event, err error)
-	AddEvent(ctx context.Context, e types.Event) (event types.Event, err error)
+	AddEvent(ctx context.Context, e types.NewEvent) (event types.Event, err error)
 }
 
 type basicApiService struct{}

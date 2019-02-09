@@ -11,28 +11,22 @@ type Resolver struct {
 	Endpoints endpoint.Endpoints
 }
 
-func (r *Resolver) Mutation() MutationResolver {
-	return &mutationResolver{r}
-}
 func (r *Resolver) Query() QueryResolver {
 	return &queryResolver{r}
 }
 
-type mutationResolver struct{ *Resolver }
-
-func (r *mutationResolver) CreateEvent(ctx context.Context, input types.NewEvent) (types.Event, error) {
-	// create types.NewEvent from input
-	panic("not implemented")
-	
-	//return r.e.AddEvent(ctx, newEvent)
-}
-func (r *mutationResolver) DeleteEvent(ctx context.Context, id string) (string, error) {
-	// there is no service for deletion yet
-	panic("not implemented")
+func (r *Resolver) Mutation() MutationResolver {
+	return &mutationResolver{r}
 }
 
 type queryResolver struct{ *Resolver }
 
-func (r *queryResolver) Events(ctx context.Context) ([]types.Event, error) {
+func (r *queryResolver) GetEvents(ctx context.Context) ([]types.Event, error) {
 	return r.Endpoints.GetEvents(ctx)
+}
+
+type mutationResolver struct{ *Resolver }
+
+func (r *mutationResolver) AddEvent(ctx context.Context, event types.NewEvent) (types.Event, error) {
+	return r.Endpoints.AddEvent(ctx, event)
 }

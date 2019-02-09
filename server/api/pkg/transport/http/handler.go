@@ -18,6 +18,7 @@ import (
 func NewHTTPHandler(endpoints endpoint.Endpoints, options map[string][]http.ServerOption) httpgo.Handler {
 	m := mux.NewRouter()
 	makeGraphQLHandler(m, endpoints, options["GraphQL"])
+	makePlaygroundHandler(m, endpoints, options["Playground"])
 	return m
 }
 

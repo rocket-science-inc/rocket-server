@@ -51,49 +51,32 @@ type ComplexityRoot struct {
 	}
 
 	Mutation struct {
-		CreateEvent func(childComplexity int, input types.NewEvent) int
-		DeleteEvent func(childComplexity int, id string) int
+		AddEvent func(childComplexity int, event types.NewEvent) int
 	}
 
 	Query struct {
-		Events func(childComplexity int) int
+		GetEvents func(childComplexity int) int
 	}
 }
 
 type MutationResolver interface {
-	CreateEvent(ctx context.Context, input types.NewEvent) (types.Event, error)
-	DeleteEvent(ctx context.Context, id string) (string, error)
+	AddEvent(ctx context.Context, event types.NewEvent) (types.Event, error)
 }
 type QueryResolver interface {
-	Events(ctx context.Context) ([]types.Event, error)
+	GetEvents(ctx context.Context) ([]types.Event, error)
 }
 
-func field_Mutation_createEvent_args(rawArgs map[string]interface{}) (map[string]interface{}, error) {
+func field_Mutation_addEvent_args(rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	args := map[string]interface{}{}
 	var arg0 types.NewEvent
-	if tmp, ok := rawArgs["input"]; ok {
+	if tmp, ok := rawArgs["event"]; ok {
 		var err error
 		arg0, err = UnmarshalNewEvent(tmp)
 		if err != nil {
 			return nil, err
 		}
 	}
-	args["input"] = arg0
-	return args, nil
-
-}
-
-func field_Mutation_deleteEvent_args(rawArgs map[string]interface{}) (map[string]interface{}, error) {
-	args := map[string]interface{}{}
-	var arg0 string
-	if tmp, ok := rawArgs["id"]; ok {
-		var err error
-		arg0, err = graphql.UnmarshalID(tmp)
-		if err != nil {
-			return nil, err
-		}
-	}
-	args["id"] = arg0
+	args["event"] = arg0
 	return args, nil
 
 }
@@ -198,36 +181,24 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Event.Deleted(childComplexity), true
 
-	case "Mutation.createEvent":
-		if e.complexity.Mutation.CreateEvent == nil {
+	case "Mutation.addEvent":
+		if e.complexity.Mutation.AddEvent == nil {
 			break
 		}
 
-		args, err := field_Mutation_createEvent_args(rawArgs)
+		args, err := field_Mutation_addEvent_args(rawArgs)
 		if err != nil {
 			return 0, false
 		}
 
-		return e.complexity.Mutation.CreateEvent(childComplexity, args["input"].(types.NewEvent)), true
+		return e.complexity.Mutation.AddEvent(childComplexity, args["event"].(types.NewEvent)), true
 
-	case "Mutation.deleteEvent":
-		if e.complexity.Mutation.DeleteEvent == nil {
+	case "Query.getEvents":
+		if e.complexity.Query.GetEvents == nil {
 			break
 		}
 
-		args, err := field_Mutation_deleteEvent_args(rawArgs)
-		if err != nil {
-			return 0, false
-		}
-
-		return e.complexity.Mutation.DeleteEvent(childComplexity, args["id"].(string)), true
-
-	case "Query.events":
-		if e.complexity.Query.Events == nil {
-			break
-		}
-
-		return e.complexity.Query.Events(childComplexity), true
+		return e.complexity.Query.GetEvents(childComplexity), true
 
 	}
 	return 0, false
@@ -508,13 +479,8 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 		switch field.Name {
 		case "__typename":
 			out.Values[i] = graphql.MarshalString("Mutation")
-		case "createEvent":
-			out.Values[i] = ec._Mutation_createEvent(ctx, field)
-			if out.Values[i] == graphql.Null {
-				invalid = true
-			}
-		case "deleteEvent":
-			out.Values[i] = ec._Mutation_deleteEvent(ctx, field)
+		case "addEvent":
+			out.Values[i] = ec._Mutation_addEvent(ctx, field)
 			if out.Values[i] == graphql.Null {
 				invalid = true
 			}
@@ -530,11 +496,11 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 }
 
 // nolint: vetshadow
-func (ec *executionContext) _Mutation_createEvent(ctx context.Context, field graphql.CollectedField) graphql.Marshaler {
+func (ec *executionContext) _Mutation_addEvent(ctx context.Context, field graphql.CollectedField) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
 	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rawArgs := field.ArgumentMap(ec.Variables)
-	args, err := field_Mutation_createEvent_args(rawArgs)
+	args, err := field_Mutation_addEvent_args(rawArgs)
 	if err != nil {
 		ec.Error(ctx, err)
 		return graphql.Null
@@ -548,7 +514,7 @@ func (ec *executionContext) _Mutation_createEvent(ctx context.Context, field gra
 	ctx = ec.Tracer.StartFieldResolverExecution(ctx, rctx)
 	resTmp := ec.FieldMiddleware(ctx, nil, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Mutation().CreateEvent(rctx, args["input"].(types.NewEvent))
+		return ec.resolvers.Mutation().AddEvent(rctx, args["event"].(types.NewEvent))
 	})
 	if resTmp == nil {
 		if !ec.HasError(rctx) {
@@ -561,39 +527,6 @@ func (ec *executionContext) _Mutation_createEvent(ctx context.Context, field gra
 	ctx = ec.Tracer.StartFieldChildExecution(ctx)
 
 	return ec._Event(ctx, field.Selections, &res)
-}
-
-// nolint: vetshadow
-func (ec *executionContext) _Mutation_deleteEvent(ctx context.Context, field graphql.CollectedField) graphql.Marshaler {
-	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
-	rawArgs := field.ArgumentMap(ec.Variables)
-	args, err := field_Mutation_deleteEvent_args(rawArgs)
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	rctx := &graphql.ResolverContext{
-		Object: "Mutation",
-		Args:   args,
-		Field:  field,
-	}
-	ctx = graphql.WithResolverContext(ctx, rctx)
-	ctx = ec.Tracer.StartFieldResolverExecution(ctx, rctx)
-	resTmp := ec.FieldMiddleware(ctx, nil, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Mutation().DeleteEvent(rctx, args["id"].(string))
-	})
-	if resTmp == nil {
-		if !ec.HasError(rctx) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(string)
-	rctx.Result = res
-	ctx = ec.Tracer.StartFieldChildExecution(ctx)
-	return graphql.MarshalString(res)
 }
 
 var queryImplementors = []string{"Query"}
@@ -615,10 +548,10 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 		switch field.Name {
 		case "__typename":
 			out.Values[i] = graphql.MarshalString("Query")
-		case "events":
+		case "getEvents":
 			wg.Add(1)
 			go func(i int, field graphql.CollectedField) {
-				out.Values[i] = ec._Query_events(ctx, field)
+				out.Values[i] = ec._Query_getEvents(ctx, field)
 				if out.Values[i] == graphql.Null {
 					invalid = true
 				}
@@ -640,7 +573,7 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 }
 
 // nolint: vetshadow
-func (ec *executionContext) _Query_events(ctx context.Context, field graphql.CollectedField) graphql.Marshaler {
+func (ec *executionContext) _Query_getEvents(ctx context.Context, field graphql.CollectedField) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
 	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
@@ -652,7 +585,7 @@ func (ec *executionContext) _Query_events(ctx context.Context, field graphql.Col
 	ctx = ec.Tracer.StartFieldResolverExecution(ctx, rctx)
 	resTmp := ec.FieldMiddleware(ctx, nil, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Query().Events(rctx)
+		return ec.resolvers.Query().GetEvents(rctx)
 	})
 	if resTmp == nil {
 		if !ec.HasError(rctx) {
@@ -2264,6 +2197,11 @@ func (ec *executionContext) introspectType(name string) (*introspection.Type, er
 var parsedSchema = gqlparser.MustLoadSchema(
 	&ast.Source{Name: "pkg/transport/http/graphql/schema.graphql", Input: `scalar Timestamp
 
+input NewEvent {
+    title: String!
+    info: String!
+}
+
 type Event {
     id: ID!
     title: String!
@@ -2273,18 +2211,12 @@ type Event {
     deleted: Timestamp
 }
 
-input NewEvent {
-    title: String!
-    info: String!
+type Query {
+    getEvents: [Event!]!
 }
 
 type Mutation {
-    createEvent(input: NewEvent!): Event!
-    deleteEvent(id: ID!): String!
-}
-
-type Query {
-    events: [Event!]!
+    addEvent(event: NewEvent!): Event!
 }
 `},
 )

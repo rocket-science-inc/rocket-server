@@ -1,5 +1,10 @@
 scalar Timestamp
 
+input NewEvent {
+    title: String!
+    info: String!
+}
+
 type Event {
     id: ID!
     title: String!
@@ -9,16 +14,10 @@ type Event {
     deleted: Timestamp
 }
 
-input NewEvent {
-    title: String!
-    info: String!
+type Query {
+    getEvents: [Event!]!
 }
 
 type Mutation {
-    createEvent(input: NewEvent!): Event!
-    deleteEvent(id: ID!): String!
-}
-
-type Query {
-    events: [Event!]!
+    addEvent(event: NewEvent!): Event!
 }

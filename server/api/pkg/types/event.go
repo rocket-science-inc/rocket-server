@@ -17,17 +17,9 @@ type Event struct {
 	DeletedAt   	*time.Time 	`json:"deleted"`
 }
 
-// BeforeInsert set CreatedAt and UpdatedAt.
-func (e *Event) BeforeInsert() error {
-	e.CreatedAt = time.Now().UTC().Truncate(time.Second)
-	e.UpdatedAt = e.CreatedAt
-	return nil
-}
-
-// BeforeUpdate set UpdatedAt.
-func (e *Event) BeforeUpdate() error {
-	e.UpdatedAt = time.Now().UTC().Truncate(time.Second)
-	return nil
+type NewEvent struct {
+	Title			string		`json:"title"`
+	Info			string		`json:"info"`
 }
 
 // MarshalTimestamp marshal custom Timestamp scalar for GraphQL schema

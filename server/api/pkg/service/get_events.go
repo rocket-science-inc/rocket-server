@@ -13,7 +13,7 @@ func (b *basicApiService) GetEvents(ctx context.Context) (events []types.Event, 
 	var data []types.Event
 	data = append(data,
 		types.Event {
-			ID: "1",
+			ID: "100",
 		},
 	)
 	return data, nil
